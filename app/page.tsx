@@ -1,7 +1,5 @@
-import Image from "next/image";
 import Navbar from "./component/Navbar";
 import Herosection from "./component/Herosection";
-import DualCard1 from "./component/main/DualCard1";
 import DualCard2 from "./component/main/DualCard2";
 import FullCard from "./component/main/FullCard";
 import Testimonials from "./component/main/Testimontials";
@@ -13,7 +11,7 @@ export default function Home() {
     <>
     <Navbar/>
     <Herosection/>
-    {/* <DualCard1/> */}
+  
     <DualCard2/>
     <FullCard/>
     <Testimonials/>
