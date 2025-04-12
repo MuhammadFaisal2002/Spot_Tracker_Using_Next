@@ -1,6 +1,19 @@
+'use client';
+
 import Image from "next/image";
 import Herosection1 from "./main/Herosection1";
+import Popup from './popups/Popup'; // Import Popup Component
+import { useState } from "react";
+
 export default function Herosection() {
+  // State for Popup visibility
+  const [showModal, setShowModal] = useState(false);
+
+  // Function to toggle Popup visibility
+  const togglePopup = () => {
+    setShowModal((prev) => !prev);
+  };
+
   return (
     <>
       <div className="relative grid grid-cols-1 lg:grid-cols-3 gap-6 px-4 sm:px-6 md:px-8 lg:px-[105px] pt-4 sm:pt-6 md:pt-8 lg:pt-[100px]">
@@ -18,7 +31,11 @@ export default function Herosection() {
             and streamline operations effortlessly.
           </p>
 
-          <button className="bg-[#CF2121] text-[14px] sm:text-[16px] font-[700] tracking-tight text-white h-[40px] sm:h-[45px] md:h-[49px] w-[160px] sm:w-[190px] md:w-[220px] rounded-full mt-[20px] sm:mt-[25px] md:mt-[30px] lg:mt-[40px]">
+          {/* Button to Toggle Popup */}
+          <button
+            onClick={togglePopup}
+            className="bg-[#CF2121] text-[14px] sm:text-[16px] font-[700] tracking-tight text-white h-[40px] sm:h-[45px] md:h-[49px] w-[160px] sm:w-[190px] md:w-[220px] rounded-full mt-[20px] sm:mt-[25px] md:mt-[30px] lg:mt-[40px]"
+          >
             Request a Free Trial
           </button>
 
@@ -62,6 +79,11 @@ export default function Herosection() {
           />
         </div>
       </div>
+
+      {/* Popup Component */}
+      <Popup isOpen={showModal} onClose={() => setShowModal(false)} />
+
+      {/* Additional Section */}
       <Herosection1 />
     </>
   );
