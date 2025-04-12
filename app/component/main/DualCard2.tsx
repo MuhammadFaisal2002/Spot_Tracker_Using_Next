@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function DualCard1() {
     return (
-        <div className="mt-10 sm:mt-16 md:mt-20 px-4 sm:px-6 md:px-8 lg:px-[105px]">
+        <div id="services" className="mt-10 sm:mt-16 md:mt-20 px-4 sm:px-6 md:px-8 lg:px-[105px]">
             {/* Header Section */}
             <div className="text-center">
                 <h2 className="text-[34px] sm:text-[42px] md:text-[48px] lg:text-[64px] font-[700] mb-4 sm:mb-6">

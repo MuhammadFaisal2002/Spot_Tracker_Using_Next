@@ -32,9 +32,9 @@ export default function Navbar() {
       {/* Navigation Links (Desktop) */}
       <nav className="hidden md:flex items-center gap-10 text-base lg:text-lg font-medium text-gray-700">
         <Link href="/home" className="hover:text-red-600 transition">Home</Link>
-        <Link href="/services" className="hover:text-red-600 transition">Services</Link>
+        <a href="#services" className="hover:text-red-600 transition">Services</a>
         <Link href="/features" className="hover:text-red-600 transition">Features</Link>
-        <Link href="/testimonials" className="hover:text-red-600 transition">Testimonials</Link>
+        <a href="#testi" className="hover:text-red-600 transition">Testimonials</a>
       </nav>
 
       {/* CTA Button (Desktop) */}
@@ -49,9 +49,9 @@ export default function Navbar() {
         <div className="absolute top-[100%] left-0 w-full bg-white shadow-lg p-6 md:hidden z-40">
           <ul className="flex flex-col gap-4 text-gray-800 text-base font-medium">
             <li><Link href="/home" onClick={() => setIsMobileMenuOpen(false)}>Home</Link></li>
-            <li><Link href="/services" onClick={() => setIsMobileMenuOpen(false)}>Services</Link></li>
+            <li><a href="#services" onClick={() => setIsMobileMenuOpen(false)}>Services</a></li>
             <li><Link href="/features" onClick={() => setIsMobileMenuOpen(false)}>Features</Link></li>
-            <li><Link href="/testimonials" onClick={() => setIsMobileMenuOpen(false)}>Testimonials</Link></li>
+            <li><a href="#testi" onClick={() => setIsMobileMenuOpen(false)}>Testimonials</a></li>
           </ul>
           <button
             className="w-full mt-4 bg-[#CF2121] text-white font-bold py-3 rounded-full text-sm"
