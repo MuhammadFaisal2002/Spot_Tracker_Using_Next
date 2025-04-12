@@ -69,47 +69,47 @@ export default function Input({ isOpen, onClose }: PopupProps) {
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center">
       {/* Outer Blue Container */}
-      <div className="relative bg-[#055FA8] w-[90%] lg:w-[1150px] h-[600px] rounded-[25px] p-6 lg:p-10 shadow-lg">
+      <div className="relative bg-[#055FA8] w-[90%] sm:w-[80%] lg:w-[1150px] h-[90%] sm:h-auto rounded-[25px] p-6 sm:p-8 lg:p-10 shadow-lg animate-slide-from-right">
         {/* Grid Layout */}
-        <div className="grid grid-cols-4 h-full gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-4 h-full gap-6">
           {/* Left Column: Progress Tracker */}
-          <div className="bg-white col-span-1 h-full rounded-[25px] p-6 flex flex-col">
+          <div className="bg-white col-span-1 h-full rounded-[25px] p-4 sm:p-6 flex flex-col items-center lg:items-start">
             <Image
               src="/logo.png"
               alt="Logo"
-              width={285}
-              height={71}
+              width={150}
+              height={40}
               className="object-contain mb-6"
             />
             <ul className="space-y-4">
               {steps.map((stepItem, index) => (
                 <li
                   key={index}
-                  className={`flex items-center gap-2 text-gray-600 ${
+                  className={`flex items-center gap-2 text-sm sm:text-base text-gray-600 ${
                     step === index ? 'text-[#055FA8] font-bold' : ''
                   }`}
                 >
-                  <stepItem.icon className="w-5 h-5" /> {stepItem.label}
+                  <stepItem.icon className="w-4 h-4 sm:w-5 sm:h-5" /> {stepItem.label}
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Right Column: Chat Interaction */}
-          <div className="bg-white col-span-3 h-full rounded-[30px] flex flex-col justify-center items-center">
+          <div className="bg-white col-span-3 h-full rounded-[30px] flex flex-col justify-center items-center p-4 sm:p-6">
             {/* Centered Chat Content */}
-            <div className="bg-[#055FA8] text-white p-4 rounded-xl text-center">
+            <div className="bg-[#055FA8] text-white p-3 sm:p-4 rounded-xl text-center text-xs sm:text-base">
               <p>{errorMessage || steps[step].question}</p> {/* Show error or question */}
             </div>
 
             {/* Input Field */}
-            <div className="mt-8 w-full">
+            <div className="mt-6 sm:mt-8 w-full">
               <input
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)} // Update input field value
                 placeholder={steps[step].placeholder}
-                className={`w-full border border-gray-300 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#055FA8] mb-4 ${
+                className={`w-full border border-gray-300 rounded-lg py-2 px-3 sm:py-3 sm:px-4 focus:outline-none focus:ring-2 focus:ring-[#055FA8] mb-4 ${
                   errorMessage ? 'border-red-500' : ''
                 }`}
               />
@@ -117,7 +117,7 @@ export default function Input({ isOpen, onClose }: PopupProps) {
                 <button
                   onClick={handleBack} // Go to previous step
                   disabled={step === 0}
-                  className={`bg-gray-300 text-white font-bold py-3 px-6 rounded-lg transition ${
+                  className={`bg-gray-300 text-xs sm:text-base text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-lg transition ${
                     step === 0 ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                 >
@@ -125,7 +125,7 @@ export default function Input({ isOpen, onClose }: PopupProps) {
                 </button>
                 <button
                   onClick={handleNext} // Go to next step or close popup
-                  className="bg-[#CF2121] text-white font-bold py-3 px-6 rounded-lg hover:bg-red-700 transition"
+                  className="bg-[#CF2121] text-xs sm:text-base text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-lg hover:bg-red-700 transition"
                 >
                   Next
                 </button>
@@ -137,9 +137,9 @@ export default function Input({ isOpen, onClose }: PopupProps) {
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute -top-5 -right-5 bg-[#CF2121] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-red-700 transition"
+          className="absolute -top-4 sm:-top-5 -right-4 sm:-right-5 bg-[#CF2121] text-white w-10 sm:w-12 h-10 sm:h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-red-700 transition"
         >
-          <X size={24} />
+          <X size={24} className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
       </div>
     </div>
