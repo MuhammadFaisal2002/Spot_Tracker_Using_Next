@@ -1,8 +1,8 @@
 'use client';
-
-import { useState } from 'react';
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-
 const faqs = [
   {
     number: '01',
@@ -30,7 +30,39 @@ export default function Faq() {
   const toggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
-
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+  
+    const questions = gsap.utils.toArray('.question');
+  
+    questions.forEach((el: any, i) => {
+      gsap.fromTo(
+        el,
+        {
+          opacity: 0,
+          y: -100,
+          rotationX: 90,
+          transformPerspective: 1000,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          rotationX: 0,
+          duration: 1.5,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 80%",
+            end: "top 60%",
+            scrub: false,
+            toggleActions: "play none none reverse",
+          },
+          delay: i * 0.1,
+        }
+      );
+    });
+  }, []);
+  
   return (
     <>
       <div className="mx-4 md:mx-16 lg:mx-[105px]">
@@ -43,7 +75,7 @@ export default function Faq() {
 
         <section className="max-w-4xl mx-auto mt-20 px-2 sm:px-4">
           {faqs.map((faq, index) => (
-            <div key={faq.number} className="border-b border-gray-300 py-6">
+            <div key={faq.number} className="question border-b border-gray-300 py-6">
               <div
                 className="flex justify-between items-center cursor-pointer"
                 onClick={() => toggle(index)}

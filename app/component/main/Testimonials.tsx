@@ -1,6 +1,37 @@
+'use client';
+
+import { useEffect, useRef } from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Testimonials() {
+  // Typing cardRefs as an array of HTMLDivElement or null
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    // Loop through each card and apply the turning animation when they come into view
+    cardRefs.current.forEach((card, index) => {
+      if (card) {
+        gsap.fromTo(
+          card,
+          { rotationY: -180, opacity: 0 }, // Start with the card rotated 180 degrees and hidden
+          {
+            rotationY: 0, opacity: 1, duration: 2, ease: "power3.out", 
+            scrollTrigger: {
+              trigger: card,
+              start: "top 90%", // Trigger when the top of the card reaches 90% of the viewport
+              toggleActions: "play none none reverse", // Play on scroll in, reverse when it leaves
+              markers: false, // Remove markers from ScrollTrigger (for debugging purposes)
+            }
+          }
+        );
+      }
+    });
+  }, []);
+
   return (
     <section id="testi" className="px-6 md:px-[105px] py-20 bg-white">
       {/* Heading */}
@@ -12,7 +43,10 @@ export default function Testimonials() {
       {/* Cards Row */}
       <div className="flex flex-col lg:flex-row justify-between gap-8">
         {/* Card 1 */}
-        <div className="w-full lg:w-[32%] p-8 shadow-lg rounded-lg bg-white">
+        <div
+          ref={(el) => { cardRefs.current[0] = el; }} // Save the reference for Card 1
+          className="w-full lg:w-[32%] p-8 shadow-lg rounded-lg bg-white"
+        >
           <div className="flex items-center gap-4 mb-6">
             <Image
               src="/user1.png"
@@ -36,7 +70,10 @@ export default function Testimonials() {
         </div>
 
         {/* Card 2 */}
-        <div className="w-full lg:w-[32%] p-8 shadow-lg rounded-lg bg-white">
+        <div
+          ref={(el) => { cardRefs.current[1] = el; }} // Save the reference for Card 2
+          className="w-full lg:w-[32%] p-8 shadow-lg rounded-lg bg-white"
+        >
           <div className="flex items-center gap-4 mb-6">
             <Image
               src="/user2.png"
@@ -59,7 +96,10 @@ export default function Testimonials() {
         </div>
 
         {/* Card 3 */}
-        <div className="w-full lg:w-[32%] p-8 shadow-lg rounded-lg bg-white">
+        <div
+          ref={(el) => { cardRefs.current[2] = el; }} // Save the reference for Card 3
+          className="w-full lg:w-[32%] p-8 shadow-lg rounded-lg bg-white"
+        >
           <div className="flex items-center gap-4 mb-6">
             <Image
               src="/user3.png"
