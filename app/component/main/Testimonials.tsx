@@ -12,7 +12,6 @@ export default function Testimonials() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Loop through each card and apply the turning animation when they come into view
     cardRefs.current.forEach((card, index) => {
       if (card) {
         gsap.fromTo(

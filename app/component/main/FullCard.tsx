@@ -68,11 +68,11 @@ export default function FullCard() {
         y: 0,
         opacity: 1,
         stagger: 0.1,
-        duration: 0.5,
+        duration: 0,
         ease: "power1.out",
         scrollTrigger: {
           trigger: "main",
-          start: "top 25%",
+          start: "top 85%",
           toggleActions: "play reverse play reverse",
         },
       }

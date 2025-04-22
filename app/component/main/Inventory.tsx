@@ -10,12 +10,15 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Inventory() {
   const [showDemoPopup, setShowDemoPopup] = useState(false);
   const [showConsultationPopup, setShowConsultationPopup] = useState(false);
-
+  const [showModal, setShowModal] = useState(false);
   // Refs for animation
   const headingRef = useRef<HTMLParagraphElement>(null);
   const subTextRef = useRef<HTMLParagraphElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
-
+  // Function to toggle Popup visibility
+  const togglePopup = () => {
+    setShowModal((prev)=> !prev);
+  };
   // Scroll animation
   useEffect(() => {
     if (headingRef.current) {
@@ -108,14 +111,14 @@ export default function Inventory() {
           className="mt-6 flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6"
         >
           <button
-            onClick={toggleDemoPopup}
+            onClick={togglePopup}
             className="bg-[#CF2121] text-white text-sm sm:text-base md:text-[18px] font-[700] rounded-full py-3 px-6 sm:py-4 sm:px-8"
           >
             Request a Free Demo
           </button>
 
           <button
-            onClick={toggleConsultationPopup}
+            onClick={togglePopup}
             className="border-4 border-[#CF2121] text-white text-sm sm:text-base md:text-[18px] font-[700] rounded-full py-3 px-6 sm:py-4 sm:px-8"
           >
             Book Consultation
@@ -130,6 +133,7 @@ export default function Inventory() {
       {showConsultationPopup && (
         <Popup isOpen={showConsultationPopup} onClose={() => setShowConsultationPopup(false)} />
       )}
+      <Popup isOpen={showModal} onClose={()=>setShowModal(false)} />
     </>
   );
 }

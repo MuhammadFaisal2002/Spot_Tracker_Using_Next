@@ -9,8 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       animation: {
-        'slide-up': 'slide-up 1s ease-out', // Slightly slower to enhance the smoothness
-        'slide-from-right': 'slideFromRight 0.5s ease-out', // New animation
+        'slide-up': 'slide-up 1.5s ease-out forwards', // Original
+        'slide-from-right': 'slideFromRight 0.5s ease-out', // Original
+
+        // ✅ New animations
+        'slide-up-slow': 'slideUpSlow 3s ease-out forwards',
+        'fade-in': 'fadeIn 2s ease-in forwards',
       },
       keyframes: {
         'slide-up': {
@@ -25,13 +29,23 @@ const config: Config = {
         },
         'slideFromRight': {
           '0%': {
-            transform: 'translateX(100%)', // Start from outside the right edge
-            opacity: '0', // Fully transparent
+            transform: 'translateX(100%)',
+            opacity: '0',
           },
           '100%': {
-            transform: 'translateX(0)', // Move to original position
-            opacity: '1', // Fully visible
+            transform: 'translateX(0)',
+            opacity: '1',
           },
+        },
+
+        // ✅ New keyframes
+        slideUpSlow: {
+          '0%': { transform: 'translateY(100%)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
     },
