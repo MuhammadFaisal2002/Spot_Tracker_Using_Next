@@ -167,19 +167,19 @@ export default function Input({ isOpen, onClose }: PopupProps) {
       setErrorMessage(`Please enter a valid ${steps[step].label.toLowerCase()}`);
       return;
     }
-
+  
     setErrorMessage('');
-
+  
     // Store the current value
     setCollectedValues(prev => ({
       ...prev,
       [steps[step].label]: inputValue
     }));
-
+  
     // On final step, submit to Strapi
     if (step === steps.length - 1) {
       setIsSubmitting(true);
-
+  
       try {
         // Prepare form data with proper values
         const formData = {
@@ -189,25 +189,23 @@ export default function Input({ isOpen, onClose }: PopupProps) {
           Email: collectedValues['Email'],
           Phone_no: Number(inputValue) // Convert only the phone number
         };
-
+  
         console.log('Submitting data:', formData);
-
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/spot-trackers`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ data: formData })
-          }
-        );
-
+  
+        // Use your Next.js API route instead of direct Strapi call
+        const response = await fetch('/api/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ data: formData })
+        });
+  
         if (!response.ok) {
           const errorResponse = await response.json();
           throw new Error(errorResponse.error?.message || 'Failed to submit form');
         }
-
+  
         setDisplayedQuestion("Thanks! We'll be in touch soon. 🚀");
         setTimeout(() => {
           onClose();
@@ -229,7 +227,6 @@ export default function Input({ isOpen, onClose }: PopupProps) {
       setInputValue('');
     }
   };
-
   const handleBack = () => {
     if (step > 0) {
       setStep(step - 1);
