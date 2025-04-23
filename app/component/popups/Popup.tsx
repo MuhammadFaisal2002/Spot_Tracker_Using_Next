@@ -32,7 +32,6 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
     return () => document.removeEventListener('keydown', handleEsc);
   }, [onClose]);
 
-
   useEffect(() => {
     if (isOpen && !inputFormOpen) {
       const tl = gsap.timeline({ delay: 0.2 });
@@ -90,7 +89,7 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
   return (
     <section className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center p-4">
       <article
-        className="relative bg-[#055FA8] w-full max-w-[1150px] h-auto max-h-[90vh] md:h-[600px] rounded-[25px] p-4 md:p-6 lg:p-10 shadow-lg animate-slide-up-slow overflow-y-auto"
+        className="relative bg-[#055FA8] w-full max-w-[1150px] sm:max-w-[90%] md:max-w-[90%] lg:max-w-[1150px] h-auto max-h-[90vh] md:h-[600px] rounded-[25px] p-4 md:p-6 lg:p-10 shadow-lg animate-slide-up-slow overflow-y-auto"
         ref={contentRef}
         role="dialog"
         aria-modal="true"
@@ -181,6 +180,5 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
         </section>
       </article>
     </section>
-
   );
 }
