@@ -87,9 +87,9 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
   if (!isOpen) return null;
 
   return (
-    <section className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center p-4">
+    <section className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center p-4 overflow-x-hidden">
       <article
-        className="relative bg-[#055FA8] w-full max-w-[1150px] sm:max-w-[90%] md:max-w-[90%] lg:max-w-[1150px] h-auto max-h-[90vh] md:h-[600px] rounded-[25px] p-4 md:p-6 lg:p-10 shadow-lg animate-slide-up-slow overflow-y-auto"
+        className="relative bg-[#055FA8] w-full max-w-[95vw] sm:max-w-[90vw] md:max-w-[1150px] h-auto max-h-[90vh] md:h-[600px] rounded-[25px] p-4 md:p-6 lg:p-10 shadow-lg animate-slide-up-slow overflow-y-auto"
         ref={contentRef}
         role="dialog"
         aria-modal="true"
@@ -114,23 +114,24 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
               alt="Spot Tracker Logo"
               width={250}
               height={50}
-              className="object-contain w-[200px] md:w-[350px]"
+              className="object-contain w-[160px] sm:w-[200px] md:w-[350px]"
+              priority
             />
           </header>
 
           <main className="flex flex-col lg:grid lg:grid-cols-2 gap-6 md:gap-8 relative">
             <section ref={textRef} className="order-1 lg:order-none">
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#055FA8] leading-snug">
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#055FA8] leading-snug">
                 Revolutionize Your Inventory Management{" "}
-                <span className="text-[#CF2121] block md:inline">with Spot Tracker</span>
+                <span className="text-[#CF2121] block sm:inline">with Spot Tracker</span>
               </h1>
-              <p className="text-gray-600 mt-2 md:mt-4 text-sm md:text-base leading-relaxed">
+              <p className="text-gray-600 mt-2 md:mt-4 text-xs sm:text-sm md:text-base leading-relaxed">
                 The ultimate solution for large-scale industries to automate inventory orders,
                 eliminate order bookers, and streamline operations effortlessly.
               </p>
               <button
                 onClick={() => setIsInputOpen(true)}
-                className="mt-4 md:mt-6 bg-[#CF2121] hover:bg-red-700 text-white font-bold py-2 px-6 md:py-3 md:px-8 rounded-full transition text-sm md:text-base"
+                className="mt-4 md:mt-6 bg-[#CF2121] hover:bg-red-700 text-white font-bold py-2 px-4 sm:py-2 sm:px-6 md:py-3 md:px-8 rounded-full transition text-xs sm:text-sm md:text-base"
               >
                 Book Your Demo
               </button>
@@ -140,7 +141,7 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
               className="bg-[#055FA8] rounded-lg p-4 md:p-6 shadow-md h-auto md:h-[250px] flex flex-col justify-between order-2 lg:order-none"
               ref={testimonialRef}
             >
-              <blockquote className="text-white italic text-sm md:text-base leading-relaxed">
+              <blockquote className="text-white italic text-xs sm:text-sm md:text-base leading-relaxed">
                 &quot;We&apos;ve seen a significant reduction in transportation cost and improved delivery
                 times since implementing Spot Tracker. Their route optimization algorithms have
                 been a game changer for our business.&quot;
@@ -155,8 +156,8 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
                   className="rounded-full w-8 h-8 md:w-10 md:h-10"
                 />
                 <div className="ml-3">
-                  <p className="font-bold text-white text-sm md:text-base">Sarah John</p>
-                  <p className="text-xs md:text-sm text-white">Logistics Manager, Nestle</p>
+                  <p className="font-bold text-white text-xs sm:text-sm md:text-base">Sarah John</p>
+                  <p className="text-xs text-white opacity-80">Logistics Manager, Nestle</p>
                 </div>
               </footer>
             </aside>
@@ -164,7 +165,7 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
             {isInputOpen && (
               <section
                 ref={inputFormRef}
-                className="absolute inset-0 bg-white rounded-[25px] z-20 overflow-y-auto"
+                className="absolute inset-0 bg-white rounded-[25px] z-20 overflow-y-auto p-4"
               >
                 <Input
                   isOpen={isInputOpen}
