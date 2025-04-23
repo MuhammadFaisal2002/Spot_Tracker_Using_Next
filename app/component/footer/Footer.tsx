@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Footer() {
   return (
     <footer className="bg-white py-10 px-4 sm:px-6 md:px-10 lg:px-[105px] border-t border-gray-200 my-12 sm:my-16 lg:my-[100px]">
@@ -5,12 +7,16 @@ export default function Footer() {
         
         {/* Company Info Section */}
         <section className="max-w-md" aria-labelledby="footer-logo">
-          <img
-            id="footer-logo"
-            src="/logo.png"
-            alt="Spot Tracker Logo"
-            className="mb-4 h-[56px] w-[324px] mx-auto md:mx-0"
-          />
+          
+        <Image
+  id="footer-logo"
+  src="/logo.png"
+  alt="Spot Tracker Logo"
+  width={324}
+  height={56}
+  className="mb-4 h-[56px] w-[324px] mx-auto md:mx-0"
+/>
+
           <p className="text-sm sm:text-[14px] font-normal text-[#8D8D8D]">
             The ultimate solution for large-scale industries to automate inventory orders,
             eliminate order bookers, and streamline operations effortlessly.

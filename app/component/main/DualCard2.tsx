@@ -74,7 +74,8 @@ export default function DualCard2() {
                   Store Orders Inventory
                 </p>
                 <p className="text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] mt-3 sm:mt-4 leading-snug">
-                  With Spot Tracker, effortlessly manage your store's inventory and streamline your ordering process.
+                With Spot Tracker, effortlessly manage your store&apos;s inventory and streamline your ordering process.
+
                 </p>
               </div>
             </div>
@@ -168,7 +169,8 @@ export default function DualCard2() {
                   Store Receives Order
                 </p>
                 <p className="text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] mt-3 sm:mt-4 leading-snug">
-                  Complete the cycle with real-time notifications when orders arrive at your store, ensuring you're always in the loop.
+                Complete the cycle with real-time notifications when orders arrive at your store, ensuring you&apos;re always in the loop.
+
                 </p>
               </div>
             </div>
