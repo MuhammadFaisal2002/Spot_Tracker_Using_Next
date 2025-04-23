@@ -181,18 +181,16 @@ export default function Input({ isOpen, onClose }: PopupProps) {
       setIsSubmitting(true);
   
       try {
-        // Prepare form data with proper values
         const formData = {
           User_name: collectedValues['User_name'],
           Company_name: collectedValues['Company_name'],
           Job_title: collectedValues['Job_title'],
           Email: collectedValues['Email'],
-          Phone_no: Number(inputValue) // Convert only the phone number
+          Phone_no: Number(inputValue)
         };
   
-        console.log('Submitting data:', formData);
+        console.log('Attempting submission:', formData);
   
-        // Use your Next.js API route instead of direct Strapi call
         const response = await fetch('/api/submit', {
           method: 'POST',
           headers: {
@@ -201,23 +199,25 @@ export default function Input({ isOpen, onClose }: PopupProps) {
           body: JSON.stringify({ data: formData })
         });
   
+        const result = await response.json();
+        
         if (!response.ok) {
-          const errorResponse = await response.json();
-          throw new Error(errorResponse.error?.message || 'Failed to submit form');
+          console.error('Submission failed:', result);
+          throw new Error(result.error || 'Failed to submit form');
         }
   
+        console.log('Submission successful:', result);
         setDisplayedQuestion("Thanks! We'll be in touch soon. 🚀");
+        
         setTimeout(() => {
           onClose();
         }, 1500);
       } catch (error) {
-        if (error instanceof Error) {
-          setErrorMessage(error.message);
-        } else if (typeof error === 'string') {
-          setErrorMessage(error);
-        } else {
-          setErrorMessage('Submission failed. Please try again.');
-        }
+        console.error('Submission error:', error);
+        setErrorMessage(
+          error instanceof Error ? error.message : 
+          'Submission failed. Please try again.'
+        );
       } finally {
         setIsSubmitting(false);
       }
