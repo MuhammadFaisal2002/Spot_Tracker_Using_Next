@@ -230,80 +230,78 @@ export default function Input({ isOpen, onClose }: PopupProps) {
 
   return (
     <div
-      ref={containerRef}
-      className="absolute inset-0 bg-white rounded-[25px] pt-4 px-4 md:px-8 "
-    >
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 md:h-[400px] h-auto ">
+  ref={containerRef}
+  className="absolute inset-0 bg-white rounded-[25px] pt-4 px-4 md:px-8 h-full overflow-auto md:overflow-hidden"
+>
+  <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-full">
 
-        {/* Sidebar with progress indicators */}
-        <aside className="bg-[#055FA8] bg-opacity-10 rounded-[25px] p-4 md:p-6 flex flex-col h-auto md:h-[320px]">
-          <div className="flex justify-between items-center mb-4 md:mb-6">
-            {/* Optional: Logo/close button */}
+    {/* Sidebar */}
+    <aside className="bg-[#055FA8] bg-opacity-10 rounded-[25px] p-4 md:p-6 flex flex-col overflow-hidden h-full">
+      <div className="flex justify-between items-center mb-4 md:mb-6">
+        {/* Optional: Close/Logo */}
+      </div>
+
+      <ul className="space-y-3 md:space-y-4 overflow-y-auto pr-2">
+        {steps.map((item, index) => (
+          <li
+            key={index}
+            className={`flex items-center gap-2 md:gap-3 text-sm font-medium ${step === index ? 'text-[#055FA8] font-semibold' : 'text-gray-600'}`}
+          >
+            <item.icon className="w-4 h-4 md:w-5 md:h-5" />
+            {item.label.replace('Ab ', '').replace('123 ', '')}
+          </li>
+        ))}
+      </ul>
+    </aside>
+
+    {/* Main Section */}
+    <main className="lg:col-span-3 flex flex-col h-full">
+      <div className="flex flex-col h-full">
+        {/* Question box */}
+        <div className="flex items-start gap-2 md:gap-3 bg-[#055FA8] bg-opacity-10 border-[#055FA8] border-2 md:border-4 border-solid p-3 md:p-4 rounded-[20px] mb-4 max-w-full md:max-w-md">
+          <Bot className="text-[#055FA8] w-7 h-7 md:w-9 md:h-9" />
+          <div className="text-[#055FA8] font-[700] text-sm md:text-md pt-1">
+            <p className="whitespace-pre-wrap">
+              {errorMessage || displayedQuestion}
+              {isTyping && <span className="animate-pulse">|</span>}
+            </p>
           </div>
+        </div>
 
-          <ul className="space-y-3 md:space-y-4">
-            {steps.map((item, index) => (
-              <li
-                key={index}
-                className={`flex items-center gap-2 md:gap-3 text-sm font-medium ${step === index ? 'text-[#055FA8] font-semibold' : 'text-gray-600'
-                  }`}
-              >
-                <item.icon className="w-4 h-4 md:w-5 md:h-5" />
-                {item.label.replace('Ab ', '').replace('123 ', '')}
-              </li>
-            ))}
-          </ul>
-        </aside>
+        {/* Input field */}
+        <input
+          type={steps[step].label === '123 Phone_no' ? 'number' : 'text'}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder={steps[step].placeholder}
+          className={`w-full border-2 rounded-xl py-2 md:py-3 px-4 md:px-5 text-sm md:text-base mb-3 focus:outline-none focus:ring-2 focus:ring-[#055FA8] ${errorMessage ? 'border-red-500' : 'border-gray-300'}`}
+          onKeyDown={(e) => e.key === 'Enter' && handleNext()}
+        />
 
-        {/* Main form area */}
-        <main className="lg:col-span-3 flex flex-col justify-center pb-4">
-
-          {/* Question box */}
-          <div className="flex items-start gap-2 md:gap-3 bg-[#055FA8] bg-opacity-10 border-[#055FA8] border-2 md:border-4 border-solid p-3 md:p-4 rounded-[20px] mb-4 md:mb-6 max-w-full md:max-w-md">
-            <Bot className="text-[#055FA8] w-7 h-7 md:w-9 md:h-9" />
-            <div className="text-[#055FA8] font-[700] text-sm md:text-md pt-1">
-              <p className="whitespace-pre-wrap">
-                {errorMessage || displayedQuestion}
-                {isTyping && <span className="animate-pulse">|</span>}
-              </p>
-            </div>
-          </div>
-
-          {/* Input field */}
-          <input
-            type={steps[step].label === '123 Phone_no' ? 'number' : 'text'}
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            placeholder={steps[step].placeholder}
-            className={`w-full border-2 rounded-xl py-2 md:py-3 px-4 md:px-5 text-sm md:text-base mb-4 md:mb-6 focus:outline-none focus:ring-2 focus:ring-[#055FA8] ${errorMessage ? 'border-red-500' : 'border-gray-300'
-              }`}
-            onKeyDown={(e) => e.key === 'Enter' && handleNext()}
-          />
-
-          {/* Navigation buttons */}
-          <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 sm:gap-4">
+        {/* Navigation buttons - moved to bottom */}
+        <div className="mt-auto pt-2">
+          <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3">
             <button
               onClick={handleBack}
               disabled={step === 0}
-              className={`py-2 px-4 sm:px-6 rounded-xl text-white transition text-sm md:text-base ${step === 0
-                  ? 'bg-gray-300 cursor-not-allowed'
-                  : 'bg-gray-500 hover:bg-gray-600'
-                }`}
+              className={`py-2 px-4 sm:px-6 rounded-xl text-white transition text-sm md:text-base ${step === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-gray-500 hover:bg-gray-600'}`}
             >
               Back
             </button>
             <button
               onClick={handleNext}
               disabled={isSubmitting}
-              className={`bg-[#CF2121] hover:bg-red-700 text-white py-2 px-4 sm:px-6 rounded-xl transition text-sm md:text-base ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
+              className={`bg-[#CF2121] hover:bg-red-700 text-white py-2 px-4 sm:px-6 rounded-xl transition text-sm md:text-base ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               {isSubmitting ? 'Submitting...' : step === steps.length - 1 ? 'Submit' : 'Next'}
             </button>
           </div>
-        </main>
+        </div>
       </div>
-    </div>
+    </main>
+  </div>
+</div>
+
 
   );
 }
