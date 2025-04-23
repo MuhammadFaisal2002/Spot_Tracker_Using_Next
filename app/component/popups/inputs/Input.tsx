@@ -124,33 +124,43 @@ export default function Input({ isOpen, onClose }: PopupProps) {
   // Submit data to Strapi
   const submitToStrapi = async (formData: Record<string, any>) => {
     try {
-      console.log('Submitting data:', formData); // Log the payload
-
+      console.log('Submitting data:', formData);
+  
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/spot-trackers`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}` // Add this line
           },
           body: JSON.stringify({ data: formData })
         }
       );
-
+  
       if (!response.ok) {
-        // Get the error response body
-        const errorResponse = await response.json();
-        console.error('Error details:', errorResponse);
-        throw new Error(errorResponse.error?.message || 'Failed to submit form');
+        // Try to get error details
+        let errorDetails = '';
+        try {
+          const errorResponse = await response.json();
+          errorDetails = errorResponse.error?.message || JSON.stringify(errorResponse);
+        } catch (e) {
+          errorDetails = await response.text();
+        }
+        throw new Error(`Server responded with ${response.status}: ${errorDetails}`);
       }
-
-      return await response.json();
+  
+      // Verify response has content before parsing
+      const text = await response.text();
+      if (!text) {
+        throw new Error('Empty response from server');
+      }
+      return JSON.parse(text);
     } catch (error) {
       console.error('Full submission error:', error);
       throw error;
     }
   };
-
   const handleNext = async () => {
     // Validation
     if (!steps[step].validation(inputValue)) {
