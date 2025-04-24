@@ -41,7 +41,7 @@ export default function DualCard2() {
   }, []);
 
   return (
-    <div className="w-full overflow-hidden"> {/* New wrapper div */}
+    <div className="w-full overflow-hidden">
       <section
         id="services"
         aria-labelledby="how-it-works-title"
@@ -59,9 +59,9 @@ export default function DualCard2() {
           </p>
         </header>
 
-        <div className="flex flex-col md:flex-row md:justify-between gap-8 md:gap-10 w-full">
-          {/* Step 1 */}
-          <article className="w-full md:w-[48%] bg-white shadow-sm rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] overflow-hidden step">
+        <div className="flex flex-col md:flex-row md:justify-between gap-8 md:gap-10 w-full relative">
+          {/* Step 1 - Modified for overlap */}
+          <article className="w-full md:w-[48%] bg-white shadow-sm rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] overflow-hidden step relative z-10 md:mt-12">
             <div className="pb-4 sm:pb-6 md:pb-8">
               <div className="text-[#B0D7F633] text-[80px] sm:text-[100px] md:text-[120px] lg:text-[174px] font-[800] text-right pr-4 sm:pr-6 md:pr-8 lg:pr-[12px]">
                 01
@@ -74,24 +74,23 @@ export default function DualCard2() {
                   Store Orders Inventory
                 </p>
                 <p className="text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] mt-3 sm:mt-4 leading-snug">
-                With Spot Tracker, effortlessly manage your store&apos;s inventory and streamline your ordering process.
-
+                  With Spot Tracker, effortlessly manage your store&apos;s inventory and streamline your ordering process.
                 </p>
               </div>
             </div>
-            <div className="w-full h-[570px] relative">
+            <div className="w-full h-[400px] md:h-[450px] lg:h-[500px] relative">
               <Image
                 src="/step1.png"
                 alt="Illustration for step 1: Store Orders Inventory"
                 fill
-                className="object-cover rounded-b-[20px] sm:rounded-b-[25px] lg:rounded-b-[30px]"
+                className="object-contain rounded-b-[20px] sm:rounded-b-[25px] lg:rounded-b-[30px]"
               />
             </div>
           </article>
 
-          {/* Step 2 */}
+          {/* Step 2 - Adjusted for consistency */}
           <article className="w-full md:w-[48%] bg-white shadow-lg shadow-b-only rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] overflow-hidden step">
-            <div className="w-full h-[500px] relative">
+            <div className="w-full h-[400px] md:h-[450px] lg:h-[500px] relative mt-8 md:mt-0">
               <Image
                 src="/step2.png"
                 alt="Illustration for step 2: Back Office Approves"
@@ -99,11 +98,11 @@ export default function DualCard2() {
                 className="object-contain rounded-t-[20px] sm:rounded-t-[25px] lg:rounded-t-[30px]"
               />
             </div>
-            <div className="pt-4 sm:pt-6 md:pt-8 pb-4 mt-[-40px] sm:pb-6 md:pb-8">
-              <div className="text-[#B0D7F633] text-[80px] sm:text-[100px] md:text-[120px] lg:text-[174px] font-[800] text-left pl-4 sm:pl-6 md:pl-8 lg:pl-[12px]">
+            <div className="  pb-4 sm:pb-6 md:pb-8">
+              <div className="text-[#B0D7F633] mb-10 text-[80px] sm:text-[100px] md:text-[120px] lg:text-[174px] font-[800] text-left pl-4 sm:pl-6 md:pl-8 lg:pl-[12px]">
                 02
               </div>
-              <div className="px-4 sm:px-6 md:px-8 lg:px-10">
+              <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-[-60px]">
                 <h3 className="text-[26px] sm:text-[34px] md:text-[40px] lg:text-[50px] font-[600] text-[#055FA8]">
                   Step 2
                 </h3>
@@ -118,10 +117,11 @@ export default function DualCard2() {
           </article>
         </div>
 
-        <div className="flex flex-col md:flex-row md:justify-between gap-8 md:gap-10 mt-[20px] sm:mt-[30px] md:mt-[35px] lg:mt-[40px] w-full">
+        {/* Steps 3 & 4 - Adjusted for consistency */}
+        <div className="flex flex-col md:flex-row md:justify-between gap-8 md:gap-10 mt-[20px] sm:mt-[30px] md:mt-[35px] lg:mt-[40px] w-full relative">
           {/* Step 3 */}
-          <article className="w-full md:w-[48%] bg-white shadow-sm rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] overflow-hidden step">
-            <div className="sm:pb-6 md:pb-8">
+          <article className="w-full md:w-[48%] bg-white shadow-sm rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] overflow-hidden step relative z-10 md:mt-12">
+            <div className="pb-4 sm:pb-6 md:pb-8">
               <div className="text-[#B0D7F633] text-[80px] sm:text-[100px] md:text-[120px] lg:text-[174px] font-[800] text-right pr-4 sm:pr-6 md:pr-8 lg:pr-[12px]">
                 03
               </div>
@@ -137,31 +137,31 @@ export default function DualCard2() {
                 </p>
               </div>
             </div>
-            <div className="w-full h-[570px] relative">
+            <div className="w-full h-[400px] md:h-[450px] lg:h-[500px] relative ">
               <Image
                 src="/step3.png"
                 alt="Illustration for step 3: Warehouse Packs & Delivers"
                 fill
-                className="object-contain rounded-b-[20px] sm:rounded-b-[25px] lg:rounded-b-[30px]"
+                className="object-contain rounded-b-[20px] sm:rounded-b-[25px] lg:rounded-b-[30px] "
               />
             </div>
           </article>
 
           {/* Step 4 */}
-          <article className="w-full md:w-[48%] bg-white shadow-lg shadow-b-only rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] overflow-hidden step">
-            <div className="w-full h-[500px] relative">
+          <article className="w-full md:w-[48%] mb-4 bg-white shadow-lg shadow-b-only rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] overflow-hidden step">
+            <div className="w-full h-[400px] md:h-[450px] lg:h-[500px] relative mt-8 md:mt-0">
               <Image
                 src="/step4.png"
                 alt="Illustration for step 4: Store Receives Order"
                 fill
-                className="object-contain rounded-t-[20px] sm:rounded-t-[25px] lg:rounded-t-[30px]"
+                className="object-contain rounded-t-[20px] sm:rounded-t-[25px] lg:rounded-t-[30px] h-full"
               />
             </div>
-            <div className="pt-4 sm:pt-6 md:pt-8 pb-4 mt-[-40px] sm:pb-6 md:pb-8">
-              <div className="text-[#B0D7F633] text-[80px] sm:text-[100px] md:text-[120px] lg:text-[174px] font-[800] text-left pl-4 sm:pl-6 md:pl-8 lg:pl-[12px]">
+            <div className=" sm:pt-6 md:pt-8 pb-4 sm:pb-6 md:pb-8">
+              <div className=" text-[#B0D7F633] text-[80px] mb-10 sm:text-[100px] md:text-[120px] lg:text-[174px] font-[800] text-left pl-4 sm:pl-6 md:pl-8 lg:pl-[12px]">
                 04
               </div>
-              <div className="px-4 sm:px-6 md:px-8 lg:px-10">
+              <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-[-40px]">
                 <h3 className="text-[26px] sm:text-[34px] md:text-[40px] lg:text-[50px] font-[600] text-[#055FA8]">
                   Step 4
                 </h3>
@@ -169,8 +169,7 @@ export default function DualCard2() {
                   Store Receives Order
                 </p>
                 <p className="text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] mt-3 sm:mt-4 leading-snug">
-                Complete the cycle with real-time notifications when orders arrive at your store, ensuring you&apos;re always in the loop.
-
+                  Complete the cycle with real-time notifications when orders arrive at your store, ensuring you&apos;re always in the loop.
                 </p>
               </div>
             </div>

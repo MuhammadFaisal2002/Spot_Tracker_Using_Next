@@ -9,20 +9,24 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function FullCard() {
   useEffect(() => {
-    // Animate cards with tilt
+    // Prevent horizontal scroll
+    gsap.set("body", { overflowX: "hidden" });
+
+    // Animate cards with tilt and smoother transitions
     gsap.utils.toArray<HTMLElement>(".row").forEach((row) => {
       const cards = row.querySelectorAll<HTMLElement>(".card-left, .card-right");
 
-      cards.forEach((card) => {
+      cards.forEach((card, index) => {
         const isLeft = card.classList.contains("card-left");
         const direction = isLeft ? -1 : 1;
 
+        // Initial animation
         gsap.fromTo(
           card,
           {
-            x: 200 * direction,
-            y: 100,
-            rotateZ: 10 * direction,
+            x: 150 * direction,
+            y: 80,
+            rotateZ: 8 * direction,
             opacity: 0,
           },
           {
@@ -30,76 +34,108 @@ export default function FullCard() {
             y: 0,
             rotateZ: 0,
             opacity: 1,
-            duration: 0.5,
-            ease: "power3.out",
+            duration: 0.8,
+            delay: index * 0.1,
+            ease: "elastic.out(1, 0.5)",
             scrollTrigger: {
               trigger: row,
-              start: "top 20%",
+              start: "top 70%",
               end: "bottom 100%",
-              scrub: true,
+              scrub: 0.5,
+              markers: false,
             },
           }
         );
+
+        // Hover animation
+        card.addEventListener("mouseenter", () => {
+          gsap.to(card, {
+            y: -10,
+            scale: 1.03,
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        });
+
+        card.addEventListener("mouseleave", () => {
+          gsap.to(card, {
+            y: 0,
+            scale: 1,
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        });
       });
     });
 
-    // Logo animation
+    // Enhanced logo animation
     gsap.fromTo(
       ".logo",
-      { scale: 0.8, opacity: 0 },
+      { scale: 0.7, opacity: 0, rotation: -5 },
       {
         scale: 1,
         opacity: 1,
-        duration: 0.5,
-        ease: "power1.out",
+        rotation: 0,
+        duration: 0.8,
+        ease: "back.out(1.7)",
         scrollTrigger: {
           trigger: "main",
-          start: "top 25%",
-          toggleActions: "play reverse play reverse",
+          start: "top 30%",
+          toggleActions: "play none none none",
         },
       }
     );
 
-    // Paragraph line animation
+    // Smoother paragraph line animation
     gsap.fromTo(
       ".line-p",
-      { y: 20, opacity: 0 },
+      { y: 30, opacity: 0 },
       {
         y: 0,
         opacity: 1,
-        stagger: 0.1,
-        duration: 0,
-        ease: "power1.out",
+        stagger: 0.15,
+        duration: 0.6,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: "main",
-          start: "top 85%",
-          toggleActions: "play reverse play reverse",
+          start: "top 80%",
+          toggleActions: "play none none none",
         },
       }
     );
 
-    // Animate mobile images
+    // Enhanced mobile images animation
     gsap.utils.toArray<HTMLElement>(".mobile-img").forEach((img, i) => {
       gsap.fromTo(
         img,
         {
-          y: 100,
-          rotateZ: i % 2 === 0 ? -8 : 8,
+          y: 120,
+          rotateZ: i % 2 === 0 ? -12 : 12,
           opacity: 0,
         },
         {
           y: 0,
           rotateZ: 0,
           opacity: 1,
-          duration: 1,
-          ease: "back.out(1.4)",
+          duration: 1.2,
+          delay: i * 0.15,
+          ease: "back.out(1.7)",
           scrollTrigger: {
             trigger: img,
-            start: "top 90%",
-            toggleActions: "play none none reverse",
+            start: "top 85%",
+            toggleActions: "play none none none",
           },
         }
       );
+
+      // Add floating animation
+      gsap.to(img, {
+        y: 15,
+        duration: 2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
     });
 
     return () => {
@@ -108,13 +144,13 @@ export default function FullCard() {
   }, []);
 
   return (
-    <div className="overflow-x-hidden mt-10 sm:mt-16 md:mt-20 px-4 sm:px-6 md:px-8 lg:px-[105px]">
+    <div className="overflow-hidden mt-10 sm:mt-16 md:mt-20 px-4 sm:px-6 md:px-8 lg:px-[105px]">
       {/* Header Section */}
       <div className="text-center">
         <h2 className="text-[34px] sm:text-[42px] md:text-[48px] lg:text-[64px] font-[700]">
           Who Can Benefit?
         </h2>
-        <p className="text-[16px] sm:text-[18px] md:text-[20px] lg:text-[22px] mt-2">
+        <p className="text-[16px] sm:text-[18px] md:text-[20px] lg:text-[22px] mt-2 line-p">
           Built for Large-Scale Industries
         </p>
       </div>
@@ -122,77 +158,95 @@ export default function FullCard() {
       {/* Card Section */}
       <div className="flex flex-col md:flex-row md:justify-between flex-wrap gap-6 md:gap-8 mt-8 row">
         {/* Card 1 */}
-        <div className="card-left bg-white w-full sm:w-[80%] md:w-[30%] shadow-md rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] p-6 sm:p-8 mx-auto md:mx-0">
+        <div className="card-left bg-white w-full sm:w-[80%] md:w-[30%] shadow-lg rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] p-6 sm:p-8 mx-auto md:mx-0 transition-all duration-300 hover:shadow-xl">
           <Image
             src="/benefitlogo1.png"
             alt="Manufacturers & Distributors"
             width={120}
             height={120}
-            className="mx-auto mb-6"
+            className="mx-auto mb-6 logo"
           />
-          <h3 className="text-[20px] sm:text-[22px] md:text-[24px] font-[600] text-center mb-4">
+          <h3 className="text-[20px] sm:text-[22px] md:text-[24px] font-[600] text-center mb-4 line-p">
             Manufacturers & Distributors
           </h3>
-          <p className="text-[14px] sm:text-[16px] md:text-[18px] text-center leading-snug mb-6">
+          <p className="text-[14px] sm:text-[16px] md:text-[18px] text-center leading-snug mb-6 line-p">
             Simplify production planning and scheduling with our intuitive platform.
           </p>
           <div className="flex justify-around items-center flex-wrap gap-2">
-            <Image src="/logo1.1.png" alt="Philips" width={50} height={50} />
-            <Image src="/logo1.2.png" alt="Samsung" width={50} height={50} />
-            <Image src="/logo1.3.png" alt="Sony" width={50} height={50} />
-            <Image src="/logo1.4.png" alt="Dell" width={50} height={50} />
+            {[1, 2, 3, 4].map((i) => (
+              <Image 
+                key={i}
+                src={`/logo1.${i}.png`} 
+                alt={`Logo ${i}`} 
+                width={50} 
+                height={50}
+                className="hover:scale-110 transition-transform duration-200"
+              />
+            ))}
           </div>
         </div>
 
         {/* Card 2 */}
-        <div className="card-right bg-white w-full sm:w-[80%] md:w-[30%] shadow-md rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] p-6 sm:p-8 mx-auto md:mx-0">
+        <div className="card-right bg-white w-full sm:w-[80%] md:w-[30%] shadow-lg rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] p-6 sm:p-8 mx-auto md:mx-0 transition-all duration-300 hover:shadow-xl">
           <Image
             src="/benefitlogo2.png"
             alt="FMCG Brands"
             width={120}
             height={120}
-            className="mx-auto mb-6"
+            className="mx-auto mb-6 logo"
           />
-          <h3 className="text-[20px] sm:text-[22px] md:text-[24px] font-[600] text-center mb-4">
+          <h3 className="text-[20px] sm:text-[22px] md:text-[24px] font-[600] text-center mb-4 line-p">
             FMCG Brands
           </h3>
-          <p className="text-[14px] sm:text-[16px] md:text-[18px] text-center leading-snug mb-6">
+          <p className="text-[14px] sm:text-[16px] md:text-[18px] text-center leading-snug mb-6 line-p">
             Maximize shelf life and minimize waste with our inventory management solutions.
           </p>
           <div className="flex justify-around items-center flex-wrap gap-2">
-            <Image src="/logo2.1.png" alt="Unilever" width={50} height={50} />
-            <Image src="/logo2.2.png" alt="Nestlé" width={50} height={50} />
-            <Image src="/logo2.3.png" alt="Coca-Cola" width={50} height={50} />
-            <Image src="/logo2.4.png" alt="Pepsi" width={50} height={50} />
+            {[1, 2, 3, 4].map((i) => (
+              <Image 
+                key={i}
+                src={`/logo2.${i}.png`} 
+                alt={`Logo ${i}`} 
+                width={50} 
+                height={50}
+                className="hover:scale-110 transition-transform duration-200"
+              />
+            ))}
           </div>
         </div>
 
         {/* Card 3 */}
-        <div className="card-left bg-white w-full sm:w-[80%] md:w-[30%] shadow-md rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] p-6 sm:p-8 mx-auto md:mx-0">
+        <div className="card-left bg-white w-full sm:w-[80%] md:w-[30%] shadow-lg rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] p-6 sm:p-8 mx-auto md:mx-0 transition-all duration-300 hover:shadow-xl">
           <Image
             src="/benefitlogo3.png"
             alt="Retail Chains & Stores"
             width={120}
             height={120}
-            className="mx-auto mb-6"
+            className="mx-auto mb-6 logo"
           />
-          <h3 className="text-[20px] sm:text-[22px] md:text-[24px] font-[600] text-center mb-4">
+          <h3 className="text-[20px] sm:text-[22px] md:text-[24px] font-[600] text-center mb-4 line-p">
             Retail Chains & Stores
           </h3>
-          <p className="text-[14px] sm:text-[16px] md:text-[18px] text-center leading-snug mb-6">
+          <p className="text-[14px] sm:text-[16px] md:text-[18px] text-center leading-snug mb-6 line-p">
             Optimize store operations and reduce labor costs with our automated inventory management.
           </p>
           <div className="flex justify-around items-center flex-wrap gap-2">
-            <Image src="/logo3.1.png" alt="Walmart" width={50} height={50} />
-            <Image src="/logo3.2.png" alt="Costco" width={50} height={50} />
-            <Image src="/logo3.3.png" alt="IKEA" width={50} height={50} />
-            <Image src="/logo3.4.png" alt="Target" width={50} height={50} />
+            {[1, 2, 3, 4].map((i) => (
+              <Image 
+                key={i}
+                src={`/logo3.${i}.png`} 
+                alt={`Logo ${i}`} 
+                width={50} 
+                height={50}
+                className="hover:scale-110 transition-transform duration-200"
+              />
+            ))}
           </div>
         </div>
       </div>
 
       {/* Mobile Screens Section */}
-      <div className="flex flex-col sm:flex-row justify-center items-center gap-8 mt-10">
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-8 mt-10 sm:mt-16 md:mt-20">
         <Image
           src="/mob1.png"
           alt="Mobile Screen 1"
