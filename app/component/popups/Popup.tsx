@@ -119,7 +119,7 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
             />
           </header>
 
-          <main className="flex flex-col lg:grid lg:grid-cols-2 gap-6 md:gap-8 relative">
+          <main className="flex flex-col px-3 lg:grid lg:grid-cols-2 gap-6 md:gap-8 relative">
             <section ref={textRef} className="order-1 lg:order-none">
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#055FA8] leading-snug">
                 Revolutionize Your Inventory Management{" "}
