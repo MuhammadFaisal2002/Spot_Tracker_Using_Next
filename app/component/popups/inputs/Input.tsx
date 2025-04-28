@@ -41,31 +41,21 @@ export default function Input({ isOpen, onClose }: PopupProps) {
       setIsSubmitted(false);
       setCollectedValues({});
       setDisplayedQuestion('');
-      gsap.fromTo(
-        containerRef.current,
-        { x: '100%', opacity: 0 },
-        { x: 0, opacity: 1, duration: 1.2, ease: 'power3.out' }
-      );
+      gsap.fromTo(containerRef.current, { x: '100%', opacity: 0 }, { x: 0, opacity: 1, duration: 1.2, ease: 'power3.out' });
     }
   }, [isOpen]);
 
   useEffect(() => {
     if (inputRef.current) {
-      gsap.fromTo(
-        inputRef.current,
-        { scale: 0.8, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.7)' }
-      );
+      gsap.fromTo(inputRef.current, { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.7)' });
     }
   }, [step]);
 
   useEffect(() => {
-    if (isSubmitted) return;
+    if (isSubmitted) return; // Skip typing effect on submission
 
     let mounted = true;
-    if (typingIntervalRef.current) {
-      clearInterval(typingIntervalRef.current);
-    }
+    if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
 
     const startTyping = (text: string, speed: number = 30) => {
       setDisplayedQuestion('');
@@ -78,9 +68,7 @@ export default function Input({ isOpen, onClose }: PopupProps) {
           setDisplayedQuestion(prev => prev + char);
           currentIndex++;
         } else {
-          if (typingIntervalRef.current) {
-            clearInterval(typingIntervalRef.current);
-          }
+          if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
           setIsTyping(false);
         }
       }, speed);
@@ -94,9 +82,7 @@ export default function Input({ isOpen, onClose }: PopupProps) {
 
     return () => {
       mounted = false;
-      if (typingIntervalRef.current) {
-        clearInterval(typingIntervalRef.current);
-      }
+      if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
     };
   }, [step, collectedValues, isSubmitted]);
 
@@ -105,9 +91,7 @@ export default function Input({ isOpen, onClose }: PopupProps) {
 
     const currentStep = steps[step];
     if (!currentStep.validation(inputValue)) {
-      setErrorMessage(
-        `Please enter a valid ${currentStep.label.replace('_', ' ').toLowerCase()}`
-      );
+      setErrorMessage(`Please enter a valid ${currentStep.label.replace('_', ' ').toLowerCase()}`);
       return;
     }
 
@@ -117,14 +101,13 @@ export default function Input({ isOpen, onClose }: PopupProps) {
 
     if (step === steps.length - 1) {
       setIsSubmitting(true);
-      if (typingIntervalRef.current) {
-        clearInterval(typingIntervalRef.current);
-      }
+      if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
 
       setIsSubmitted(true);
       setInputValue('');
       setDisplayedQuestion("");
 
+      // Dropdown (hanging) animation for the Thanks div
       gsap.fromTo(
         '.thanks-message',
         { opacity: 0, y: -150 },
@@ -137,12 +120,9 @@ export default function Input({ isOpen, onClose }: PopupProps) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ data: newValues }),
         });
-
         if (!res.ok) throw new Error('Failed to submit');
 
-        setTimeout(() => {
-          onClose();
-        }, 3000);
+        setTimeout(() => { onClose(); }, 3000);
       } catch (err) {
         setErrorMessage('Submission failed. Please try again.');
         console.error(err);
@@ -157,11 +137,7 @@ export default function Input({ isOpen, onClose }: PopupProps) {
         onComplete: () => {
           setStep(prev => prev + 1);
           setInputValue('');
-          gsap.fromTo(
-            containerRef.current,
-            { x: '100%', opacity: 0 },
-            { x: 0, opacity: 1, duration: 0.5 }
-          );
+          gsap.fromTo(containerRef.current, { x: '100%', opacity: 0 }, { x: 0, opacity: 1, duration: 0.5 });
         }
       });
     }
@@ -173,92 +149,122 @@ export default function Input({ isOpen, onClose }: PopupProps) {
       x: '100%', opacity: 0, duration: 0.5, onComplete: () => {
         setStep(prev => prev - 1);
         setInputValue('');
-        gsap.fromTo(
-          containerRef.current,
-          { x: '-100%', opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.5 }
-        );
+        gsap.fromTo(containerRef.current, { x: '-100%', opacity: 0 }, { x: 0, opacity: 1, duration: 0.5 });
       }
     });
   };
 
   return (
-    <div ref={containerRef} className="fixed inset-0 bg-white rounded-none sm:rounded-[25px] pt-4 px-4 sm:px-8 h-full w-full overflow-auto flex items-center justify-center">
-      {/* Close button for mobile */}
-      <button 
-        onClick={onClose}
-        className="absolute top-4 right-4 sm:hidden z-50 p-2 rounded-full bg-gray-100"
-      >
-        <X className="w-5 h-5 text-gray-600" />
-      </button>
+    <div ref={containerRef} className="absolute inset-0 bg-white rounded-xl pt-4 px-4 md:px-8 h-full overflow-auto flex flex-col ">
+      {/* Mobile horizontal nav for icons (hidden on large screens) */}
+      {!isSubmitted && (
+        <div className="lg:hidden bg-[#055FA8]/10 rounded-xl p-4 flex flex-wrap justify-evenly items-center mb-4">
+          {steps.map((stepItem, index) => (
+            <div key={index} className={`flex flex-col items-center ${step === index ? 'text-[#055FA8] font-semibold' : 'text-gray-600'}`}>
+              <stepItem.icon className="w-6 h-6" />
+              {/* <span className="text-xs mt-1">{stepItem.label.replace(/_/g, ' ')}</span> */}
+            </div>
+          ))}
+        </div>
+      )}
 
-      <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 h-full w-full max-w-6xl mx-auto">
-        {/* Sidebar - now appears at top on mobile */}
-        <aside className="bg-[#055FA8]/10 rounded-[20px] p-3 sm:p-6 w-full lg:w-auto lg:min-w-[200px]">
-          <ul className="flex flex-row lg:flex-col gap-2 sm:gap-4 overflow-x-auto lg:overflow-x-visible lg:overflow-y-auto py-2 lg:py-0">
+      {/* Desktop layout: grid with sidebar and main content */}
+      <div className="hidden lg:grid lg:grid-cols-4 gap-6 flex-1">
+        <aside className="bg-[#055FA8]/10 rounded-xl p-4 md:p-6 h-full">
+          <ul className="space-y-4">
             {steps.map((stepItem, index) => (
-              <li 
-                key={index} 
-                className={`flex items-center gap-3 text-sm font-medium whitespace-nowrap px-3 py-2 rounded-lg ${step === index && !isSubmitted ? 'bg-[#055FA8] text-white' : 'text-gray-600'}`}
-              >
-                <stepItem.icon className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="hidden sm:inline">{stepItem.label.replace(/_/g, ' ')}</span>
-                <span className="sm:hidden">{index + 1}</span>
+              <li key={index} className={`flex items-center gap-3 text-sm font-medium ${step === index && !isSubmitted ? 'text-[#055FA8] font-semibold' : 'text-gray-600'}`}>
+                <stepItem.icon className="w-5 h-5" />
+                {stepItem.label.replace(/_/g, ' ')}
               </li>
             ))}
           </ul>
         </aside>
 
-        {/* Main content */}
-        <main className="flex-1 flex flex-col items-center justify-center h-full w-full px-2 sm:px-0">
-          {isSubmitted ? (
-            <div className="thanks-message bg-[#055FA8] text-white p-6 sm:p-8 rounded-[20px] flex items-center justify-center text-center text-lg sm:text-xl md:text-2xl font-bold max-w-xs sm:max-w-md w-full">
-              Thanks {collectedValues['User_name']}! We'll reach you soon 🚀
-            </div>
-          ) : (
-            <div className="w-full max-w-md mx-auto">
-              {/* Question */}
-              <div
-                ref={questionRef}
-                className="flex items-start gap-3 bg-[#055FA8]/10 border-[#055FA8] border-2 p-3 sm:p-4 rounded-[18px] mb-4 sm:mb-6 w-full"
-              >
-                <Bot className="text-[#055FA8] w-7 h-7 sm:w-9 sm:h-9 flex-shrink-0" />
-                <p className="text-[#055FA8] font-bold text-base sm:text-lg md:text-[20px]">
-                  {errorMessage || displayedQuestion}
-                </p>
+        <main className="lg:col-span-3 flex flex-col items-center justify-center">
+          {!isSubmitted ? (
+            <>
+              <div ref={questionRef} className="flex items-start gap-3 bg-[#055FA8]/10 border-[#055FA8] border-2 p-4 rounded-xl mb-6 max-w-xl">
+                <Bot className="text-[#055FA8] w-9 h-9" />
+                <p className="text-[#055FA8] font-bold pt-1 text-lg">{errorMessage || displayedQuestion}</p>
               </div>
 
-              {/* Input */}
               <input
                 ref={inputRef}
-                type={steps[step].label === 'Phone_no' ? 'tel' : 'text'}
+                type={steps[step].label === 'Phone_no' ? 'number' : 'text'}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder={steps[step].placeholder}
                 onKeyDown={(e) => e.key === 'Enter' && handleNext()}
-                className={`w-full border-2 rounded-lg sm:rounded-xl py-2 px-4 text-sm sm:text-base mb-4 sm:mb-6 focus:outline-none focus:ring-2 focus:ring-[#055FA8] ${errorMessage ? 'border-red-500' : 'border-gray-300'}`}
+                className={`w-full border-2 rounded-xl py-2 px-4 text-base mb-6 focus:outline-none focus:ring-2 focus:ring-[#055FA8] ${errorMessage ? 'border-red-500' : 'border-gray-300'}`}
               />
 
-              {/* Buttons */}
-              <div className="flex gap-3 sm:gap-4 w-full">
+              <div className="flex gap-4">
                 <button
                   onClick={handleBack}
                   disabled={step === 0}
-                  className={`bg-gray-300 text-white px-4 sm:px-6 py-2 rounded-lg text-sm sm:text-base flex-1 ${step === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  className={`bg-gray-300 text-white px-6 py-2 rounded-lg ${step === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   Back
                 </button>
                 <button
                   onClick={handleNext}
                   disabled={isSubmitting}
-                  className="bg-[#055FA8] text-white px-4 sm:px-6 py-2 rounded-lg text-sm sm:text-base flex-1"
+                  className="bg-[#055FA8] text-white px-6 py-2 rounded-lg"
                 >
-                  {isSubmitting ? '...' : step === steps.length - 1 ? 'Submit' : 'Next'}
+                  {isSubmitting ? 'Submitting...' : step === steps.length - 1 ? 'Submit' : 'Next'}
                 </button>
               </div>
+            </>
+          ) : (
+            <div className="thanks-message bg-[#055FA8] text-white p-8 rounded-xl flex items-center justify-center text-center text-2xl font-bold transition-all duration-500 max-w-md">
+              Thanks {collectedValues['User_name']}! We'll reach you soon 🚀
             </div>
           )}
         </main>
+      </div>
+
+      {/* For mobile layout, display main content below the horizontal icons */}
+      <div className="lg:hidden flex-1 flex flex-col items-center justify-center">
+        {!isSubmitted ? (
+          <>
+            <div ref={questionRef} className="flex items-start gap-3 bg-[#055FA8]/10 border-[#055FA8] border-2 p-4 rounded-xl mb-6 max-w-xl">
+              <Bot className="text-[#055FA8] w-9 h-9" />
+              <p className="text-[#055FA8] font-bold pt-1 text-lg">{errorMessage || displayedQuestion}</p>
+            </div>
+
+            <input
+              ref={inputRef}
+              type={steps[step].label === 'Phone_no' ? 'number' : 'text'}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              placeholder={steps[step].placeholder}
+              onKeyDown={(e) => e.key === 'Enter' && handleNext()}
+              className={`w-full border-2 rounded-xl py-2 px-4 text-base mb-6 focus:outline-none focus:ring-2 focus:ring-[#055FA8] ${errorMessage ? 'border-red-500' : 'border-gray-300'}`}
+            />
+
+            <div className="flex gap-4">
+              <button
+                onClick={handleBack}
+                disabled={step === 0}
+                className={`bg-gray-300 text-white px-6 py-2 rounded-lg ${step === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                Back
+              </button>
+              <button
+                onClick={handleNext}
+                disabled={isSubmitting}
+                className="bg-[#055FA8] text-white px-6 py-2 rounded-lg"
+              >
+                {isSubmitting ? 'Submitting...' : step === steps.length - 1 ? 'Submit' : 'Next'}
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="thanks-message bg-[#055FA8] text-white p-8 rounded-xl flex items-center justify-center text-center text-2xl font-bold transition-all duration-500 max-w-md">
+            Thanks {collectedValues['User_name']}! We'll reach you soon 🚀
+          </div>
+        )}
       </div>
     </div>
   );
