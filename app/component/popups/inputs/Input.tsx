@@ -222,7 +222,7 @@ export default function Input({ isOpen, onClose }: PopupProps) {
             </>
           ) : (
             <div className="thanks-message bg-[#055FA8] text-white p-8 rounded-xl flex items-center justify-center text-center text-2xl font-bold transition-all duration-500 max-w-md">
-              Thanks {collectedValues['User_name']}! We'll reach you soon 🚀
+              Thanks {collectedValues['User_name']}! We&apos;ll reach you soon 🚀
             </div>
           )}
         </main>
