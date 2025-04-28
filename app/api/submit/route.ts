@@ -19,13 +19,14 @@ export async function POST(request: Request) {
     console.log('Received request body:', body);
 
     // 3. Validate required fields
-    if (!body.data?.User_name || !body.data?.Email) {
-      console.error('Missing required fields');
-      return NextResponse.json(
-        { error: 'Name and email are required fields' },
-        { status: 400 }
-      );
-    }
+    if (!body.data?.User_name) {
+        console.error('Missing required fields');
+        return NextResponse.json(
+          { error: 'User name is a required field' },
+          { status: 400 }
+        );
+      }
+      
 
     // 4. Prepare Strapi request
     const strapiUrl = `${process.env.STRAPI_URL}/api/spot-trackers`;
