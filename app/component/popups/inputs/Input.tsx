@@ -32,6 +32,24 @@ export default function Input({ isOpen, onClose }: PopupProps) {
     { label: 'Reviews_OR_Query', placeholder: 'Any specific questions or feedback for us?', question: "Is there anything specific you'd like to share or ask about how Spot Tracker can support your business?", icon: Briefcase, validation: (v: string) => v.trim() !== '' },
   ];
 
+  // 🔥 Moved outside useEffect — properly defined now
+  const startTyping = (text: string, speed: number = 30) => {
+    if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
+    setDisplayedQuestion('');
+    setIsTyping(true);
+    let currentIndex = 0;
+    typingIntervalRef.current = setInterval(() => {
+      const char = text[currentIndex];
+      if (char !== undefined) {
+        setDisplayedQuestion(prev => prev + char);
+        currentIndex++;
+      } else {
+        clearInterval(typingIntervalRef.current!);
+        setIsTyping(false);
+      }
+    }, speed);
+  };
+
   useEffect(() => {
     if (isOpen) {
       setStep(0);
@@ -52,27 +70,10 @@ export default function Input({ isOpen, onClose }: PopupProps) {
   }, [step]);
 
   useEffect(() => {
-    if (isSubmitted) return; // Skip typing effect on submission
+    if (isSubmitted) return;
 
     let mounted = true;
     if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
-
-    const startTyping = (text: string, speed: number = 30) => {
-      setDisplayedQuestion('');
-      setIsTyping(true);
-      let currentIndex = 0;
-      typingIntervalRef.current = setInterval(() => {
-        if (!mounted) return;
-        const char = text[currentIndex];
-        if (char !== undefined) {
-          setDisplayedQuestion(prev => prev + char);
-          currentIndex++;
-        } else {
-          if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
-          setIsTyping(false);
-        }
-      }, speed);
-    };
 
     const currentStep = steps[step];
     const question = typeof currentStep.question === 'function'
@@ -90,8 +91,15 @@ export default function Input({ isOpen, onClose }: PopupProps) {
     if (isSubmitting) return;
 
     const currentStep = steps[step];
-    if (!currentStep.validation(inputValue)) {
-      setErrorMessage(`Please enter a valid ${currentStep.label.replace('_', ' ').toLowerCase()}`);
+    const currentValue = inputValue.trim();
+
+    if (currentStep.label === 'User_name' && !/^[a-zA-Z\s]+$/.test(currentValue)) {
+      startTyping('Name must only contain letters. Please try again!');
+      return;
+    }
+
+    if (!currentStep.validation(currentValue)) {
+      startTyping(`Please enter a valid ${currentStep.label.replace('_', ' ').toLowerCase()}`);
       return;
     }
 
@@ -105,9 +113,8 @@ export default function Input({ isOpen, onClose }: PopupProps) {
 
       setIsSubmitted(true);
       setInputValue('');
-      setDisplayedQuestion("");
+      setDisplayedQuestion('');
 
-      // Dropdown (hanging) animation for the Thanks div
       gsap.fromTo(
         '.thanks-message',
         { opacity: 0, y: -150 },
@@ -124,7 +131,7 @@ export default function Input({ isOpen, onClose }: PopupProps) {
 
         setTimeout(() => { onClose(); }, 3000);
       } catch (err) {
-        setErrorMessage('Submission failed. Please try again.');
+        startTyping('Submission failed. Please try again.');
         console.error(err);
       } finally {
         setIsSubmitting(false);
@@ -156,19 +163,16 @@ export default function Input({ isOpen, onClose }: PopupProps) {
 
   return (
     <div ref={containerRef} className="absolute inset-0 bg-white rounded-xl pt-4 px-4 md:px-8 h-full overflow-auto flex flex-col ">
-      {/* Mobile horizontal nav for icons (hidden on large screens) */}
       {!isSubmitted && (
         <div className="lg:hidden bg-[#055FA8]/10 rounded-xl p-4 flex flex-wrap justify-evenly items-center mb-4">
           {steps.map((stepItem, index) => (
             <div key={index} className={`flex flex-col items-center ${step === index ? 'text-[#055FA8] font-semibold' : 'text-gray-600'}`}>
               <stepItem.icon className="w-6 h-6" />
-              {/* <span className="text-xs mt-1">{stepItem.label.replace(/_/g, ' ')}</span> */}
             </div>
           ))}
         </div>
       )}
 
-      {/* Desktop layout: grid with sidebar and main content */}
       <div className="hidden lg:grid lg:grid-cols-4 gap-6 flex-1">
         <aside className="bg-[#055FA8]/10 rounded-xl p-4 md:p-6 h-full">
           <ul className="space-y-4">
@@ -222,49 +226,6 @@ export default function Input({ isOpen, onClose }: PopupProps) {
             </div>
           )}
         </main>
-      </div>
-
-      {/* For mobile layout, display main content below the horizontal icons */}
-      <div className="lg:hidden flex-1 flex flex-col items-center justify-center">
-        {!isSubmitted ? (
-          <>
-            <div ref={questionRef} className="flex items-start gap-3 bg-[#055FA8]/10 border-[#055FA8] border-2 p-4 rounded-xl mb-6 max-w-xl">
-              <Bot className="text-[#055FA8] w-9 h-9" />
-              <p className="text-[#055FA8] font-bold pt-1 text-lg">{errorMessage || displayedQuestion}</p>
-            </div>
-
-            <input
-              ref={inputRef}
-              type={steps[step].label === 'Phone_no' ? 'number' : 'text'}
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder={steps[step].placeholder}
-              onKeyDown={(e) => e.key === 'Enter' && handleNext()}
-              className={`w-full border-2 rounded-xl py-2 px-4 text-base mb-6 focus:outline-none focus:ring-2 focus:ring-[#055FA8] ${errorMessage ? 'border-red-500' : 'border-gray-300'}`}
-            />
-
-            <div className="flex gap-4">
-              <button
-                onClick={handleBack}
-                disabled={step === 0}
-                className={`bg-gray-300 text-white px-6 py-2 rounded-lg ${step === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-              >
-                Back
-              </button>
-              <button
-                onClick={handleNext}
-                disabled={isSubmitting}
-                className="bg-[#055FA8] text-white px-6 py-2 rounded-lg"
-              >
-                {isSubmitting ? 'Submitting...' : step === steps.length - 1 ? 'Submit' : 'Next'}
-              </button>
-            </div>
-          </>
-        ) : (
-          <div className="thanks-message bg-[#055FA8] text-white p-8 rounded-xl flex items-center justify-center text-center text-2xl font-bold transition-all duration-500 max-w-md">
-            Thanks {collectedValues['User_name']}! We'll reach you soon 🚀
-          </div>
-        )}
       </div>
     </div>
   );
