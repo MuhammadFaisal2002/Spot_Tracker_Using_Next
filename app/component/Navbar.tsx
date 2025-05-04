@@ -16,7 +16,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="p-4 md:px-12 lg:mx-[105px] flex items-center justify-between shadow-md mt-6 relative z-50 bg-white">
+      <header className="p-4 md:px-12 lg:mx-[105px] flex items-center justify-between shadow-md mt-6 relative bg-white">
         <div className="flex items-center justify-between w-full md:w-auto">
           <Image src="/logo.png" alt="Logo" width={150} height={40} className="object-contain" />
           <button className="md:hidden text-gray-800" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>

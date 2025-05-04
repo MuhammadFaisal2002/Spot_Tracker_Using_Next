@@ -1,0 +1,159 @@
+.sidebar {
+  width: auto;
+  height: 520px;
+  background-color: white;
+  border-radius: 20px; /* 0 30px 30px 0 */
+  padding: 1.5rem; /* 24px */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Small devices (sm) */
+@media (min-width: 640px) {
+  .sidebar {
+    width: 18rem; /* 288px */
+  }
+}
+
+/* Medium devices (md) */
+@media (min-width: 768px) {
+  .sidebar {
+    width: 17rem; /* 320px */
+    margin-left: 30px;
+  }
+}
+
+/* Large devices (lg) */
+@media (min-width: 1024px) {
+  .sidebar {
+    width: 20rem; /* 352px */
+
+  }
+}
+
+.logoContainer {
+  opacity: 0;
+  transform: translateY(-20px);
+  margin-bottom: 2.5rem; /* 40px */
+}
+
+.logo {
+  object-fit: contain;
+  width: 10rem; /* 160px */
+}
+
+/* Small devices (sm) */
+@media (min-width: 640px) {
+  .logo {
+    width: 12.5rem; /* 200px */
+  }
+}
+
+/* Medium devices (md) */
+@media (min-width: 768px) {
+  .logo {
+    width: 21.875rem; /* 350px */
+  }
+}
+
+.stepsContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-left: 1.25rem; /* 20px */
+  gap: 0.5rem; /* 8px */
+}
+
+.stepItem {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem; /* 16px */
+  opacity: 0;
+}
+
+.stepDotLine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stepDot {
+  width: 1.5rem; /* 24px */
+  height: 1.5rem; /* 24px */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepDotCompleted {
+  background-color: #3b82f6;
+}
+
+.stepDotActiveBorder {
+  border: 2px solid #3b82f6;
+  background-color: #eff6ff;
+}
+
+.stepDotUpcomingBorder {
+  border: 2px solid #d1d5db;
+}
+
+.stepCheckmark {
+  width: 1rem; /* 16px */
+  height: 1rem; /* 16px */
+  color: white;
+}
+
+.stepInnerDot {
+  width: 0.75rem; /* 12px */
+  height: 0.75rem; /* 12px */
+  background-color: #3b82f6;
+  border-radius: 50%;
+  transform: scale(0);
+}
+
+.stepConnector {
+  height: 3rem; /* 48px */
+  border-left-width: 1px;
+}
+
+.stepConnectorCompleted {
+  border-left-color: rgba(59, 130, 246, 0.5);
+  border-left-style: solid;
+}
+
+.stepConnectorUpcoming {
+  border-left-color: rgba(209, 213, 219, 0.5);
+  border-left-style: dashed;
+}
+
+.stepLabel {
+  font-size: 1rem; /* 16px */
+  padding-top: 0.125rem; /* 2px */
+  transform: translateX(-10px);
+}
+
+.stepLabelActive {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.stepLabelCompleted {
+  color: #4b5563;
+}
+
+.stepLabelUpcoming {
+  color: #9ca3af;
+}
+
+.stepActiveLine {
+  display: block;
+  height: 0.125rem; /* 2px */
+  background-color: #3b82f6;
+  border-radius: 9999px;
+  margin-top: 0.25rem; /* 4px */
+  width: 0;
+}
