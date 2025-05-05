@@ -1,18 +1,20 @@
 .sidebar {
   width: auto;
-  height: 520px;
+  height: 500px;
   background-color: white;
   border-radius: 20px; /* 0 30px 30px 0 */
   padding: 1.5rem; /* 24px */
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  overflow: auto;
 }
 
 /* Small devices (sm) */
 @media (min-width: 640px) {
   .sidebar {
     width: 18rem; /* 288px */
+    overflow: auto;
   }
 }
 
@@ -62,7 +64,7 @@
   display: flex;
   flex-direction: column;
   margin-left: 1.25rem; /* 20px */
-  gap: 0.5rem; /* 8px */
+  gap: 0.rem; /* 8px */
 }
 
 .stepItem {
