@@ -38,7 +38,7 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
     if (isOpen && !inputFormOpen) {
       const tl = gsap.timeline({ delay: 0.2 });
       tl.from(headerRef.current, {
-        duration: 3.2,
+        duration: 2,
         y: -100,
         opacity: 0,
         rotationX: 60,
@@ -47,7 +47,7 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
       tl.from(
         textRef.current,
         {
-          duration: 2.5,
+          duration: 1.5,
           x: -100,
           y: 100,
           opacity: 0,
@@ -59,7 +59,7 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
       tl.from(
         testimonialRef.current,
         {
-          duration: 1.4,
+          duration: 0.8,
           x: 100,
           y: 50,
           opacity: 0,
@@ -76,7 +76,7 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
     if (isInputOpen) {
       setInputFormOpen(true);
       gsap.from(inputFormRef.current, {
-        duration: 0.8,
+        duration: 0.1,
         x: '100%',
         opacity: 0,
         ease: 'power3.out',

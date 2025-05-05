@@ -13,7 +13,7 @@ const config: Config = {
         'slide-from-right': 'slideFromRight 0.5s ease-out', // Original
 
         // ✅ New animations
-        'slide-up-slow': 'slideUpSlow 3s ease-out forwards',
+        'slide-up-slow': 'slideUpSlow 1.5s ease-out forwards',
         'fade-in': 'fadeIn 2s ease-in forwards',
       },
       keyframes: {
