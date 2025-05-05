@@ -17,6 +17,27 @@
     overflow: auto;
   }
 }
+@media (min-width: 400px) and (max-width: 768px) {
+  .sidebar {
+    width: auto; /* e.g., 288px */
+    overflow: auto;
+    height: 320px;
+  }
+  .stepsItem{
+    padding-top: px;
+    line-height: normal;
+  }
+
+  .scrollbar-hidden-md {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  .scrollbar-hidden-md::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
+
 
 /* Medium devices (md) */
 @media (min-width: 768px) {

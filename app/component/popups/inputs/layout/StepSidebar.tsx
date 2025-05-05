@@ -12,6 +12,7 @@ const steps = [
 
 const StepSidebar = ({ step }: { step: number }) => {
   return (
+    
     <div className={styles.sidebar}>
       <motion.div
         className={styles.logoContainer}
@@ -19,6 +20,7 @@ const StepSidebar = ({ step }: { step: number }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
+       
         <Image
           src="/logo.png"
           alt="Spot Tracker Logo"
@@ -29,7 +31,7 @@ const StepSidebar = ({ step }: { step: number }) => {
         />
       </motion.div>
 
-      <div className={styles.stepsContainer}>
+      <div className={styles.stepsContainer} >
         {steps.map((label, index) => {
           const isActive = step === index;
           const isCompleted = step > index;
@@ -38,7 +40,7 @@ const StepSidebar = ({ step }: { step: number }) => {
           return (
             <motion.div
               key={index}
-              className={styles.stepItem}
+              className={`${styles.stepItem} scrollbar-hidden-md`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: index * 0.1 }}
