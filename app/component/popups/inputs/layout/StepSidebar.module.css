@@ -13,7 +13,7 @@
 /* Small devices (sm) */
 @media (min-width: 640px) {
   .sidebar {
-    width: 18rem; /* 288px */
+    width: auto; /* 288px */
     overflow: auto;
   }
 }

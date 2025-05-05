@@ -144,7 +144,7 @@ const Bot: React.FC<BotProps> = ({ currentStep, setCurrentStep, onClose }) => {
   };
 
   return (
-    <div className="w-full h-full bg-white rounded-[20px] flex flex-col relative">
+    <div className="w-full h-full bg-white rounded-[20px] flex flex-col relative ">
       {currentStep > 0 && (
         <button
           onClick={handleBack}
