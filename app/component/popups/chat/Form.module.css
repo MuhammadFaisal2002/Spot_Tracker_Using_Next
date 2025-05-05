@@ -1,0 +1,60 @@
+/* For mobile (400px-768px) */
+@media (min-width: 400px) and (max-width: 768px) {
+    .formContainer {
+      gap: 6px !important; /* Reduced from gap-10 (40px) to 2px */
+      height: 49vh !important;
+    }
+  }
+  @media (min-width: 555px) and (max-width: 640px) {
+    .formContainer {/* Reduced from gap-10 (40px) to 2px */
+      height: 46vh !important;
+    }
+  }
+  @media (min-width: 400px) and (max-width: 501px) {
+    .formContainer {/* Reduced from gap-10 (40px) to 2px */
+      height: 55vh !important;
+    }
+  }
+  @media (min-width: 501px) and (max-width: 555px) {
+    .formContainer {/* Reduced from gap-10 (40px) to 2px */
+      height: 52vh !important;
+    }
+  }
+  /* For desktop (768px+) */
+  @media (min-width: 768px) {
+    .formContainer {
+      gap: 30px; /* Reduced gap between sidebar and bot */
+    }
+  }
+  @media (min-width: 1185px)and (max-width: 1285px) {
+    .formContainer {
+      gap: 30px; /* Reduced gap between sidebar and bot */
+    }
+  }
+  @media (min-width: 1100px)and (max-width: 1184px) {
+    .formContainer {
+      gap: 45px;
+       /* Reduced gap between sidebar and bot */
+    }
+  }
+  @media (min-width: 1000px)and (max-width: 1100px) {
+    .formContainer {
+      gap: 55px;
+       /* Reduced gap between sidebar and bot */
+    }
+  }
+
+  @media (min-width: 900px)and (max-width: 1000px) {
+    .formContainer {
+      gap: 63px;
+       /* Reduced gap between sidebar and bot */
+    }
+  }
+
+  
+  @media (min-width: 768px)and (max-width: 900px) {
+    .formContainer {
+      gap: 80px;
+       /* Reduced gap between sidebar and bot */
+    }
+  }

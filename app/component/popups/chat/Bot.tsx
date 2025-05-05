@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 interface Message {
-  sender: 'bot' | 'user';
+  sender: 'bot' | 'user' | 'error';
   text: string;
 }
 
@@ -34,7 +34,6 @@ const Bot: React.FC<BotProps> = ({ currentStep, setCurrentStep, onClose }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
   const [isTyping, setIsTyping] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -63,7 +62,6 @@ const Bot: React.FC<BotProps> = ({ currentStep, setCurrentStep, onClose }) => {
       setMessages((prev) => prev.slice(0, -2));
       setAnswers((prev) => prev.slice(0, -1));
       setCurrentStep(currentStep - 1);
-      setErrorMessage('');
     }
   };
 
@@ -85,7 +83,7 @@ const Bot: React.FC<BotProps> = ({ currentStep, setCurrentStep, onClose }) => {
 
     const error = validateInput(userText);
     if (error) {
-      setMessages((prev) => [...prev, { sender: 'bot', text: error }]);
+      setMessages((prev) => [...prev, { sender: 'error', text: error }]);
       inputElem.value = '';
       return;
     }
@@ -93,7 +91,6 @@ const Bot: React.FC<BotProps> = ({ currentStep, setCurrentStep, onClose }) => {
     setMessages((prev) => [...prev, { sender: 'user', text: userText }]);
     const updatedAnswers = [...answers, userText];
     setAnswers(updatedAnswers);
-    setErrorMessage('');
     inputElem.value = '';
 
     if (currentStep < questions.length - 1) {
@@ -136,7 +133,7 @@ const Bot: React.FC<BotProps> = ({ currentStep, setCurrentStep, onClose }) => {
           console.error('Error:', err);
           setMessages((prev) => [
             ...prev,
-            { sender: 'bot', text: 'Oops! Something went wrong. Please try again later.' }
+            { sender: 'error', text: 'Oops! Something went wrong. Please try again later.' }
           ]);
         }
       }, 1500);
@@ -144,7 +141,7 @@ const Bot: React.FC<BotProps> = ({ currentStep, setCurrentStep, onClose }) => {
   };
 
   return (
-    <div className="w-full h-full bg-white rounded-[20px] flex flex-col relative ">
+    <div className="w-full h-full bg-white rounded-[20px] flex flex-col relative">
       {currentStep > 0 && (
         <button
           onClick={handleBack}
@@ -165,41 +162,79 @@ const Bot: React.FC<BotProps> = ({ currentStep, setCurrentStep, onClose }) => {
         }
       `}</style>
 
-      <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3 hide-scrollbar">
-        {messages.map((msg, idx) => (
-          <div
-            key={idx}
-            className={`flex ${msg.sender === 'bot' ? 'justify-end' : 'justify-start'}`}
-          >
-            {msg.sender === 'bot' ? (
-              <div className="flex items-end space-x-2">
-                <div className="bg-blue-100 text-blue-900 p-3 rounded-lg max-w-[80%]">
-                  {msg.text}
-                </div>
-                <div className="w-20 flex-shrink-0">
-                  <Image src="/BOT.png" alt="Bot" width={80} height={80} className="rounded-full" />
-                </div>
-              </div>
-            ) : (
-              <div className="flex items-end space-x-2">
-                <div className="w-10 flex-shrink-0">
-                  <Image src="/User.png" alt="User" width={40} height={40} className="rounded-full" />
-                </div>
-                <div className="bg-green-100 text-green-900 p-3 pr-8 py-2 rounded-lg max-w-[80%]">
-                  {msg.text}
-                </div>
-              </div>
-            )}
+<div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3 hide-scrollbar">
+  {messages.map((msg, idx) => (
+    <div
+      key={idx}
+      className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+    >
+      {msg.sender === 'bot' ? (
+        <div className="flex items-end space-x-2 max-w-[80%]">
+          <div className="w-20 flex-shrink-0">
+            <Image 
+              src="/BOT.png" 
+              alt="Bot" 
+              width={80} 
+              height={80} 
+              className="rounded-full"
+            />
           </div>
-        ))}
-        {isTyping && (
-          <div className="flex justify-end">
-            <div className="bg-blue-100 text-blue-900 p-3 rounded-lg max-w-[80%]">
-              <TypingIndicator />
-            </div>
+          <div className="bg-blue-100 text-blue-900 p-3 rounded-lg">
+            {msg.text}
           </div>
-        )}
+        </div>
+      ) : msg.sender === 'user' ? (
+        <div className="flex items-end space-x-2 max-w-[80%]">
+          <div className="bg-green-100 text-green-900 p-3 rounded-lg">
+            {msg.text}
+          </div>
+          <div className="w-10 flex-shrink-0">
+            <Image 
+              src="/User.png" 
+              alt="User" 
+              width={40} 
+              height={40} 
+              className="rounded-full" 
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="flex items-end space-x-2 max-w-[80%]">
+          <div className="w-18 flex-shrink-0">
+            <Image 
+              src="/BOT.png" 
+              alt="Bot" 
+              width={80} 
+              height={80} 
+              className="rounded-full"
+            />
+          </div>
+          <div className="bg-red-100 text-red-900 p-3 rounded-lg">
+            {msg.text}
+          </div>
+        </div>
+      )}
+    </div>
+  ))}
+  {isTyping && (
+    <div className="flex justify-start">
+      <div className="flex items-end space-x-2 max-w-[80%]">
+        <div className="w-20 flex-shrink-0">
+          <Image 
+            src="/BOT.png" 
+            alt="Bot" 
+            width={80} 
+            height={80} 
+            className="rounded-full"
+          />
+        </div>
+        <div className="bg-blue-100 text-blue-900 p-3 rounded-lg">
+          <TypingIndicator />
+        </div>
       </div>
+    </div>
+  )}
+</div>
 
       {!isTyping && currentStep < questions.length && (
         <form onSubmit={handleSubmit} className="border-t border-gray-300 p-4">
@@ -207,12 +242,12 @@ const Bot: React.FC<BotProps> = ({ currentStep, setCurrentStep, onClose }) => {
             name="userInput"
             type={currentStep === 1 ? 'tel' : 'text'}
             placeholder="Type your response..."
-            className="flex-grow border-b-4 text-[20px] border-[#055FA8] p-2 focus:outline-none w-full h-[50px]"
+            className="flex-grow border-b-4 text-[18px] border-[#055FA8] p-2 focus:outline-none w-full h-[50px]"
           />
           <div>
             <button
               type="submit"
-              className="rounded-[30px] text-[30px] font-bold border-gray-400 border-2 text-black bg-white ml-5 px-4 mt-2"
+              className="rounded-[30px] text-[20px] font-bold border-gray-400 border-2 text-black bg-white ml-5 px-4 mt-2"
             >
               Next
             </button>

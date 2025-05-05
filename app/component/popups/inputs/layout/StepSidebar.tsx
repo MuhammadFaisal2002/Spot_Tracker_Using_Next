@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import styles from './StepSidebar.module.css'; // Import the CSS module
+import styles from './StepSidebar.module.css';
 
 const steps = [
   "Your Full Name",
@@ -12,7 +12,6 @@ const steps = [
 
 const StepSidebar = ({ step }: { step: number }) => {
   return (
-    
     <div className={styles.sidebar}>
       <motion.div
         className={styles.logoContainer}
@@ -20,7 +19,6 @@ const StepSidebar = ({ step }: { step: number }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-       
         <Image
           src="/logo.png"
           alt="Spot Tracker Logo"
@@ -30,8 +28,8 @@ const StepSidebar = ({ step }: { step: number }) => {
           priority
         />
       </motion.div>
-
-      <div className={styles.stepsContainer} >
+     
+      <div className={styles.stepsContainer}>
         {steps.map((label, index) => {
           const isActive = step === index;
           const isCompleted = step > index;
@@ -40,14 +38,12 @@ const StepSidebar = ({ step }: { step: number }) => {
           return (
             <motion.div
               key={index}
-              className={`${styles.stepItem} scrollbar-hidden-md`}
+              className={styles.stepItem}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: index * 0.1 }}
             >
-              {/* Dot + Line */}
               <div className={styles.stepDotLine}>
-                {/* Animated Circle */}
                 <motion.div
                   className={`${styles.stepDot} 
                     ${isCompleted ? styles.stepDotCompleted : 
@@ -80,7 +76,6 @@ const StepSidebar = ({ step }: { step: number }) => {
                   )}
                 </motion.div>
 
-                {/* Animated Connector */}
                 {index < steps.length - 1 && (
                   <motion.div
                     className={`${styles.stepConnector} 
@@ -96,7 +91,6 @@ const StepSidebar = ({ step }: { step: number }) => {
                 )}
               </div>
 
-              {/* Label with animation */}
               <motion.p
                 className={`${styles.stepLabel} ${isActive ? styles.stepLabelActive : isCompleted ? styles.stepLabelCompleted : styles.stepLabelUpcoming}`}
                 initial={{ x: -10 }}
