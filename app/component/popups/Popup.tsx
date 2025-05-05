@@ -150,10 +150,11 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
               ref={testimonialRef}
             >
               <blockquote className="text-white italic text-xs sm:text-sm md:text-base leading-relaxed">
-                "We've seen a significant reduction in transportation cost and improved delivery
-                times since implementing Spot Tracker. Their route optimization algorithms have
-                been a game changer for our business."
-              </blockquote>
+  &ldquo;We&rsquo;ve seen a significant reduction in transportation cost and improved delivery
+  times since implementing Spot Tracker. Their route optimization algorithms have
+  been a game changer for our business.&rdquo;
+</blockquote>
+
 
               <footer className="flex items-center mt-3 md:mt-4">
                 <Image

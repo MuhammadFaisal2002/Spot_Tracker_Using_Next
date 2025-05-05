@@ -61,7 +61,7 @@ export default function DualCard2() {
 
         <div className="flex flex-col md:flex-row md:justify-between gap-8 md:gap-10 w-full relative">
           {/* Step 1 - Modified for overlap */}
-          <article className="w-full md:w-[48%] bg-white shadow-sm rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] overflow-hidden step relative z-10 md:mt-12">
+          <article className="w-full md:w-[48%] bg-white shadow-sm rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] overflow-hidden step relative md:mt-12">
             <div className="pb-4 sm:pb-6 md:pb-8">
               <div className="text-[#B0D7F633] text-[80px] sm:text-[100px] md:text-[120px] lg:text-[174px] font-[800] text-right pr-4 sm:pr-6 md:pr-8 lg:pr-[12px]">
                 01
@@ -120,7 +120,7 @@ export default function DualCard2() {
         {/* Steps 3 & 4 - Adjusted for consistency */}
         <div className="flex flex-col md:flex-row md:justify-between gap-8 md:gap-10 mt-[20px] sm:mt-[30px] md:mt-[35px] lg:mt-[40px] w-full relative">
           {/* Step 3 */}
-          <article className="w-full md:w-[48%] bg-white shadow-sm rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] overflow-hidden step relative z-10 md:mt-12">
+          <article className="w-full md:w-[48%] bg-white shadow-sm rounded-[20px] sm:rounded-[25px] lg:rounded-[30px] overflow-hidden step relative  md:mt-12">
             <div className="pb-4 sm:pb-6 md:pb-8">
               <div className="text-[#B0D7F633] text-[80px] sm:text-[100px] md:text-[120px] lg:text-[174px] font-[800] text-right pr-4 sm:pr-6 md:pr-8 lg:pr-[12px]">
                 03
