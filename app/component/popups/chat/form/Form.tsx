@@ -55,7 +55,7 @@ export default function Form({ onClose, isOpen }: FormProps) {
         ref={formContainerRef}
         className="w-full h-full flex justify-center items-center hide-scrollbar"
       >
-        <div className={`${styles.formContainer} flex flex-col gap-3 sm:flex-col md:flex-row w-full max-w-[90vw] md:max-w-[1200px] h-[50vh] md:h-[565px] rounded-[20px] overflow-auto hide-scrollbar `}>
+        <div className={`${styles.formContainer} flex flex-col   sm:flex-col md:flex-row w-full max-w-[90vw] md:max-w-[1200px] h-[50vh] md:h-[565px] rounded-[20px] overflow-auto hide-scrollbar `}>
           
           {/* Sidebar */}
           <div className="w-full md:w-[30%] md:mr-3 h-full">
@@ -63,7 +63,7 @@ export default function Form({ onClose, isOpen }: FormProps) {
           </div>
       
           {/* Chat Bot Area */}
-          <div className="w-full md:w-[68%]">
+          <div className="w-full md:w-[69.5%]">
             <Bot 
               currentStep={currentStep} 
               setCurrentStep={setCurrentStep} 
