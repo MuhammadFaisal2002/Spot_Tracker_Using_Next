@@ -167,7 +167,7 @@ const Bot: React.FC<BotProps> = ({ currentStep, setCurrentStep, onClose }) => {
   };
 
   return (
-    <div className={`${style.messageContainer} w-full h-full pl-[70px] pr-6 bg-white rounded-[20px] flex flex-col relative`}>
+    <div className={`${style.messageContainer} w-full h-full pl-[100px] pr-6 bg-white rounded-[20px] flex flex-col relative`}>
       {currentStep > 0 && (
         <button
           onClick={handleBack}
@@ -281,7 +281,7 @@ const Bot: React.FC<BotProps> = ({ currentStep, setCurrentStep, onClose }) => {
           <div>
             <button
               type="submit"
-              className={`${style.buttonContainer} rounded-[47px] text-[20px] font-bold border-[#BBBBBB] border-2 text-black bg-white ml-5 px-[40px] py-[13px] my-6 ${
+              className={`${style.buttonContainer} rounded-[47px] text-[20px] font-bold border-[#BBBBBB] border-2 text-black bg-white ml-9 px-[40px] py-[13px] my-6 ${
                 isTyping ? 'opacity-50 cursor-not-allowed' : ''
               }`}
               disabled={isTyping}

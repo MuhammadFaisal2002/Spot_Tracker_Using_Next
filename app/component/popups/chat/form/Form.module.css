@@ -21,37 +21,33 @@
     }
   }
   /* For desktop (768px+) */
-  @media (min-width: 768px) {
-    .formContainer {
-      gap: 12px; /* Reduced gap between sidebar and bot */
-    }
-  }
+
   @media (min-width: 1185px)and (max-width: 1285px) {
     .formContainer {
-      gap: 20px; /* Reduced gap between sidebar and bot */
+      gap: 18px; /* Reduced gap between sidebar and bot */
     }
   }
   @media (min-width: 1100px)and (max-width: 1184px) {
     .formContainer {
-      gap: 30px;
+      gap: 27px;
     }
   }
   @media (min-width: 1000px)and (max-width: 1100px) {
     .formContainer {
-      gap: 38px;
+      gap: 35px;
     }
   }
 
   @media (min-width: 900px)and (max-width: 1000px) {
     .formContainer {
-      gap: 42px;
+      gap: 32px;
     }
   }
 
   
   @media (min-width: 768px)and (max-width: 900px) {
     .formContainer {
-      gap: 80px;
+      gap: 55px;
     }
   }
   @media (min-width: 1300px)and (max-width: 1500px) {

@@ -89,7 +89,7 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
   return (
     <section className="fixed inset-0 z-10 bg-black bg-opacity-50 flex justify-center items-center p-4 overflow-x-hidden">
       <article
-        className="relative bg-[#055FA8] w-full max-w-[95vw] sm:max-w-[90vw] md:max-w-[1150px] h-auto max-h-[90vh] md:h-[600px] rounded-[25px] p-4 md:p-6 lg:p-10 shadow-lg animate-slide-up-slow overflow-y-auto"
+        className="relative bg-[#055FA8] w-full max-w-[95vw] sm:max-w-[90vw] md:max-w-[1150px] h-auto max-h-[90vh] md:h-[600px] rounded-[25px] p-4  shadow-lg animate-slide-up-slow overflow-y-auto"
         ref={contentRef}
         role="dialog"
         aria-modal="true"
@@ -146,7 +146,7 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
             </section>
 
             <aside
-              className="bg-[#055FA8] rounded-lg p-4 md:p-6 shadow-md h-auto md:h-[250px] flex flex-col justify-between order-2 lg:order-none"
+              className="bg-[#055FA8] rounded-lg p-4 md:p-6 shadow-md h-auto md:h-[207px] flex flex-col justify-between order-2 lg:order-none"
               ref={testimonialRef}
             >
               <blockquote className="text-white italic text-xs sm:text-sm md:text-base leading-relaxed">
