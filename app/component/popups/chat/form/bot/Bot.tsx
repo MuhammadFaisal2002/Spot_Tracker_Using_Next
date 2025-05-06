@@ -129,7 +129,8 @@ const Bot: React.FC<BotProps> = ({ currentStep, setCurrentStep, onClose }) => {
         };
 
         try {
-          const res = await fetch('/api/submit', {
+          
+          const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/spot-trackers`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -149,7 +150,7 @@ const Bot: React.FC<BotProps> = ({ currentStep, setCurrentStep, onClose }) => {
               { sender: 'bot', text: `Thanks ${updatedAnswers[0]}, we'll reach you soon!` }
             ]);
             setTimeout(() => onClose(), 3000);
-          }, 1500);
+          }, 500);
 
         } catch (err) {
           console.error('Error:', err);
