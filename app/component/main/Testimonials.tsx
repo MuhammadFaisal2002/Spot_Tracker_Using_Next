@@ -12,24 +12,36 @@ export default function Testimonials() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    cardRefs.current.forEach((card, index) => {
+    cardRefs.current.forEach((card) => {
       if (card) {
-        gsap.fromTo(
-          card,
-          { rotationY: -180, opacity: 0 }, // Start with the card rotated 180 degrees and hidden
-          {
-            rotationY: 0, opacity: 1, duration: 2, ease: "power3.out", 
-            scrollTrigger: {
-              trigger: card,
-              start: "top 90%", // Trigger when the top of the card reaches 90% of the viewport
-              toggleActions: "play none none reverse", // Play on scroll in, reverse when it leaves
-              markers: false, // Remove markers from ScrollTrigger (for debugging purposes)
-            }
-          }
-        );
+        gsap.set(card, { opacity: 0 }); // Initially hide all cards
+  
+        ScrollTrigger.create({
+          trigger: card,
+          start: "top 90%",
+          toggleActions: "play none none reverse",
+          onEnter: () => {
+            gsap.fromTo(
+              card,
+              { rotationY: -180, opacity: 0 },
+              { rotationY: 0, opacity: 1, duration: 1.5, ease: "power3.out" }
+            );
+          },
+          onEnterBack: () => {
+            gsap.fromTo(
+              card,
+              { rotationY: 180, opacity: 0 },
+              { rotationY: 0, opacity: 1, duration: 1.5, ease: "power3.out" }
+            );
+          },
+          onLeave: () => gsap.set(card, { opacity: 0 }),
+          onLeaveBack: () => gsap.set(card, { opacity: 0 }),
+          markers: false
+        });
       }
     });
   }, []);
+  
 
   return (
     <section id="testi" className="px-6 md:px-[105px] py-20 bg-white">

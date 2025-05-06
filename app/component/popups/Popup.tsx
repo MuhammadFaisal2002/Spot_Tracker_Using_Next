@@ -100,7 +100,7 @@ export default function Popup({ isOpen, onClose }: PopupProps) {
             setInputFormOpen(false);
             onClose();
           }}
-          className="absolute top-2 right-2 md:top-4 md:right-4 bg-[#CF2121] text-white w-8 h-8 md:w-12 md:h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-red-700 z-30"
+          className=" absolute top-2 right-2 md:top-8 md:right-8 bg-[#055FA8] text-white w-8 h-8 md:w-12 md:h-12 rounded-full flex items-center justify-center shadow-xl hover:bg-[#316070] z-30"
           aria-label="Close"
         >
           <X size={16} className="md:w-6 md:h-6" />

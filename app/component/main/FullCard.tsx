@@ -15,39 +15,54 @@ export default function FullCard() {
     // Animate cards with tilt and smoother transitions
     gsap.utils.toArray<HTMLElement>(".row").forEach((row) => {
       const cards = row.querySelectorAll<HTMLElement>(".card-left, .card-right");
-
-      cards.forEach((card, index) => {
+    
+      cards.forEach((card) => {
         const isLeft = card.classList.contains("card-left");
         const direction = isLeft ? -1 : 1;
-
-        // Initial animation
-        gsap.fromTo(
-          card,
-          {
-            x: 150 * direction,
-            y: 80,
-            rotateZ: 8 * direction,
-            opacity: 0,
+    
+        // Strong initial state for dramatic entrance
+        gsap.set(card, {
+          opacity: 0,
+          yPercent: 30 * direction, // More vertical movement
+          xPercent: 25 * direction, // Strong horizontal push
+          scale: 0.8, // More noticeable shrink
+          rotation: 5 * direction, // More rotation
+          filter: "blur(2px)", // Subtle blur for depth
+        });
+    
+        ScrollTrigger.create({
+          trigger: row, // Trigger on the row for better sync
+          start: "10% center", // Perfect center trigger
+          end: "center 10%",
+          toggleActions: "play none none reverse", // Simpler control
+          onEnter: () => {
+            gsap.to(card, {
+              opacity: 1,
+              yPercent: 0,
+              xPercent: 0,
+              scale: 1,
+              rotation: 0,
+              filter: "blur(0px)",
+              duration: 0.1,
+              ease: "back.out(2)", // Stronger overshoot
+              stagger: 0.1 // Small stagger if multiple cards
+            });
           },
-          {
-            x: 0,
-            y: 0,
-            rotateZ: 0,
-            opacity: 1,
-            duration: 0.8,
-            delay: index * 0.1,
-            ease: "elastic.out(1, 0.5)",
-            scrollTrigger: {
-              trigger: row,
-              start: "top 70%",
-              end: "bottom 100%",
-              scrub: 0.5,
-              markers: false,
-            },
+          onLeaveBack: () => {
+            gsap.to(card, {
+              opacity: 0,
+              yPercent: 30 * direction,
+              xPercent: 25 * direction,
+              scale: 0.8,
+              rotation: 5 * direction,
+              filter: "blur(0px)",
+              duration: 0.9,
+              ease: "power3.in"
+            });
           }
-        );
-
-        // Hover animation
+        });
+  
+        // Hover animation stays same
         card.addEventListener("mouseenter", () => {
           gsap.to(card, {
             y: -10,
@@ -56,7 +71,7 @@ export default function FullCard() {
             ease: "power2.out",
           });
         });
-
+  
         card.addEventListener("mouseleave", () => {
           gsap.to(card, {
             y: 0,

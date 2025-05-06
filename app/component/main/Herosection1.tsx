@@ -10,40 +10,88 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Herosection1() {
   const cardsRef = useRef<HTMLDivElement[]>([]);
-
   useEffect(() => {
     cardsRef.current.forEach((card, i) => {
-      const direction = i % 2 === 0 ? -1 : 1; // alternate tilt direction
-
-      gsap.fromTo(
-        card,
-        {
-          x: 150 * direction,
-          y: 50,
-          rotateZ: 100 * direction,
-          opacity: 0,
+      const direction = i % 2 === 0 ? -1 : 1;
+  
+      // Set default off-screen state
+      gsap.set(card, {
+        opacity: 0,
+        x: 0,
+        y: 0,
+        rotateZ: 0,
+      });
+  
+      ScrollTrigger.create({
+        trigger: card,
+        start: "top center",
+        end: "bottom center",
+  
+        onEnter: () => {
+          // Scroll Down → Animate from +x/y/rotate
+          gsap.fromTo(
+            card,
+            {
+              x: 150 * direction,
+              y: 50,
+              rotateZ: 100 * direction,
+              opacity: 0,
+            },
+            {
+              x: 0,
+              y: 0,
+              rotateZ: 0,
+              opacity: 1,
+              duration: 1,
+              ease: "power3.out",
+            }
+          );
         },
-        {
-          x: 0,
-          y: 0,
-          rotateZ: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
+  
+        onEnterBack: () => {
+          // Scroll Up → Animate from -x/y/rotate (opposite direction)
+          gsap.fromTo(
+            card,
+            {
+              x: -150 * direction,
+              y: -50,
+              rotateZ: -100 * direction,
+              opacity: 0,
+            },
+            {
+              x: 0,
+              y: 0,
+              rotateZ: 0,
+              opacity: 1,
+              duration: 1,
+              ease: "power3.out",
+            }
+          );
+        },
+  
+        onLeave: () => {
+          // Fade out when scrolling past downward
+          gsap.to(card, {
+            opacity: 0,
+            duration: 0.5,
+          });
+        },
+  
+        onLeaveBack: () => {
+          // Fade out when scrolling up past
+          gsap.to(card, {
+            opacity: 0,
+            duration: 0.5,
+          });
+        },
+      });
     });
-
+  
     return () => {
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, []);
-
+  
   return (
     <div className="bg-black text-white w-full px-4 sm:px-6 md:px-8 lg:px-[105px] py-6 sm:py-8 md:py-[60px] lg:py-[80px]">
       {/* Heading */}
