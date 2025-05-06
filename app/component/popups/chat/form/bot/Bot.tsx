@@ -167,6 +167,14 @@ const Bot: React.FC<BotProps> = ({ currentStep, setCurrentStep, onClose }) => {
     }
   };
 
+  // Get the prefix text for the input field based on current step
+  const getInputPrefix = () => {
+    if (currentStep === 0) return "My name is";
+    if (currentStep === 1) return "My phone number is";
+    if (currentStep === 2) return "My company is";
+    return "";
+  };
+
   return (
     <div className={`${style.messageContainer} w-full h-full pl-[100px] pr-6 bg-white rounded-[20px] flex flex-col relative`}>
       {currentStep > 0 && (
@@ -268,6 +276,12 @@ const Bot: React.FC<BotProps> = ({ currentStep, setCurrentStep, onClose }) => {
       {/* Always visible form (disabled during typing) */}
       {currentStep < questions.length && (
         <form onSubmit={handleSubmit}>
+          {/* Added input prefix text */}
+          {currentStep < 3 && (
+            <div className="text-[18px] text-gray-400 mb-1 ml-2">
+              {getInputPrefix()}
+            </div>
+          )}
           <input
             ref={inputRef}
             name="userInput"
