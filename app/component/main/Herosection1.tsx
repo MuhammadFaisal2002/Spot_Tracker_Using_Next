@@ -24,8 +24,8 @@ export default function Herosection1() {
   
       ScrollTrigger.create({
         trigger: card,
-        start: "top center",
-        end: "bottom center",
+        start: "top 75%", // Start when card reaches 75% of screen height
+        end: "bottom 25%",
   
         onEnter: () => {
           // Scroll Down → Animate from +x/y/rotate

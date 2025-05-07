@@ -43,7 +43,7 @@ export default function FullCard() {
               scale: 1,
               rotation: 0,
               filter: "blur(0px)",
-              duration: 0.1,
+              duration: 0,
               ease: "back.out(2)", // Stronger overshoot
               stagger: 0.1 // Small stagger if multiple cards
             });
