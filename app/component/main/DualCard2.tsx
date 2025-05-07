@@ -19,7 +19,7 @@ export default function DualCard2() {
           y: -500,
           x: 0,
           rotationX: 90,
-          scale: 0.5,
+          scale: 0,
         },
         {
           opacity: 1,
@@ -28,7 +28,7 @@ export default function DualCard2() {
           rotationX: 0,
           scale: 1,
           ease: "power4.out",
-          duration: 2.5,
+          duration: 1.5,
           scrollTrigger: {
             trigger: el,
             start: "bottom 50%",
