@@ -15,6 +15,8 @@ const config: Config = {
         // ✅ New animations
         'slide-up-slow': 'slideUpSlow 1.5s ease-out forwards',
         'fade-in': 'fadeIn 2s ease-in forwards',
+
+        'bounce-strong': 'bounce-strong 1s infinite',
       },
       keyframes: {
         'slide-up': {
@@ -47,6 +49,15 @@ const config: Config = {
           '0%': { opacity: '0', transform: 'translateY(20px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+        'bounce-strong': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-12px)' }, // increase height
+        },
+      },
+      animationDelay: {
+        0: '0ms',
+        150: '150ms',
+        300: '300ms',
       },
     },
   },

@@ -25,9 +25,9 @@ const questions = [
 
 const TypingIndicator = () => (
   <div className="flex items-center space-x-1">
-    <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"></div>
-    <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce delay-150"></div>
-    <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce delay-300"></div>
+    <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce-strong [animation-delay:0ms]"></div>
+    <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce-strong [animation-delay:150ms]"></div>
+    <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce-strong [animation-delay:300ms]"></div>
   </div>
 );
 
@@ -264,7 +264,7 @@ const Bot: React.FC<BotProps> = ({ currentStep, setCurrentStep, onClose }) => {
                     className="rounded-full"
                   />
                 </div>
-                <div className="bg-blue-100 text-blue-900 p-3 rounded-lg">
+                <div className="bg-blue-100 text-blue-900 py-4 px-3 rounded-lg">
                   <TypingIndicator />
                 </div>
               </div>
